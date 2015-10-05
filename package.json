@@ -1,0 +1,44 @@
+{
+  "name": "webapp",
+  "version": "0.0.1",
+  "description": "The web front-end for kitchen.support",
+  "main": "index.html",
+  "scripts": {
+    "test": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitchensupport/webapp.git"
+  },
+  "author": "Garrick Buckley, Jack Horton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kitchensupport/webapp/issues"
+  },
+  "homepage": "https://github.com/kitchensupport/webapp#readme",
+  "browserify": {
+    "transform": [
+      "babelify",
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "angular": "global:angular"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "browserify-shim": "^3.8.10",
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-eslint": "^1.0.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.4",
+    "gulp-sass-lint": "^1.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
