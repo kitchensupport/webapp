@@ -9,4 +9,5 @@ deployment:
     gh_pages:
         branch: master
         commands:
+            - chmod +x deploy.sh
             - ./deploy.sh
