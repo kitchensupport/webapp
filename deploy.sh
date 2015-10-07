@@ -7,9 +7,10 @@ rm -rf dist || exit 0;
 # run our compile script
 gulp build
 
-# copy over the html and CNAME file
+# copy over the html, CNAME, and circle config file
 cp index.html dist
 cp CNAME dist
+cp circle.yml dist
 
 # go to the dist directory and create a *new* Git repo
 cd dist
