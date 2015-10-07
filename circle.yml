@@ -1,7 +1,7 @@
 general:
     branches:
-        only:
-            - master
+        ignore:
+            - gh-pages
 machine:
     node:
         version: 4.1.1
@@ -9,4 +9,5 @@ deployment:
     gh_pages:
         branch: master
         commands:
+            - chmod +x deploy.sh
             - ./deploy.sh
