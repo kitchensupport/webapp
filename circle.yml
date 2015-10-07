@@ -1,0 +1,12 @@
+general:
+    branches:
+        only:
+            - master
+machine:
+    node:
+        version: 4.1.1
+deployment:
+    gh_pages:
+        branch: master
+        commands:
+            - ./deploy.sh
