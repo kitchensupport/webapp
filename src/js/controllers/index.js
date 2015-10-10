@@ -1,7 +1,9 @@
 import angular from 'angular';
 import {appName} from '../utils/constants';
-import TestController from './TestController';
+import HeaderController from './HeaderController';
+import LogController from './LogController';
 
 const app = angular.module(appName);
 
-app.controller('TestController', TestController);
+app.controller('HeaderController', HeaderController);
+app.controller('LogController', LogController);
