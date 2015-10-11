@@ -2,9 +2,13 @@ body {
     background: white;
 }
 
-.container {
+#main {
   margin: auto;
-  padding-left: 10%;
-  padding-right: 10%;
-  max-width: 1200px;
+  padding: 0px 5% 15px 5%;
+}
+
+#login-submit {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
