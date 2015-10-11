@@ -26,7 +26,7 @@ gulp.task('lint:js', () => {
 gulp.task('build', ['build:js', 'build:sass', 'build:html']);
 
 gulp.task('build:html', () => {
-    return gulp.src('templates/**/*')
+    return gulp.src('src/templates/**/*')
         .pipe(gulp.dest('dist/templates'));
 });
 

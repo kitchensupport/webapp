@@ -1,12 +1,16 @@
-function LogController($scope, $http) {
+function LoginController($scope, $http) {
     $scope.login = () => {
-        $http.post('http://api.kitchen.support:8000/login',
-            {email: 'example@test.com', password: 'test'}
-        ).success((response) => {
-            console.log(response);
-            $scope.logs = response;
-        });
+        try {
+            $http.post('http://api.kitchen.support/accounts/login/basic',
+                {email: $scope.email, password: $scope.password}
+            ).success((response) => {
+                console.log(`Success Logging In: '${response}'.`);
+                $scope.logs = response;
+            });
+        } catch (err) {
+            console.log(`Error Logging In: '${err}'.`);
+        }
     };
 }
 
-export default ['$scope', '$http', LogController];
+export default ['$scope', '$http', LoginController];

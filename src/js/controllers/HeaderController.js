@@ -1,5 +1,3 @@
-function HeaderController() {
-
-}
+function HeaderController() {}
 
 export default [HeaderController];
