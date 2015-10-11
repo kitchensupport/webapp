@@ -1,7 +1,6 @@
-import angular from 'angular';
-import {appName} from '../utils/constants';
+import {app} from '../bootstrap';
 import HeaderDirective from './HeaderDirective';
-
-const app = angular.module(appName);
+import FooterDirective from './FooterDirective';
 
 app.directive('header', HeaderDirective);
+app.directive('footer', FooterDirective);

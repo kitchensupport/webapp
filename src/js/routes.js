@@ -1,9 +1,17 @@
-import {app} from 'bootstrap';
+import {app} from './bootstrap';
 
-app.config(['$routeProvider',
-      ($routeProvider) => {
-          $routeProvider.when('/', {
-              templateUrl: 'templates/home.html',
-              controller: 'LogController'
+app.config(['$stateProvider', '$urlRouterProvider',
+      ($stateProvider, $urlRouterProvider) => {
+          $urlRouterProvider.otherwise('/');
+
+          $stateProvider
+              .state('home', {
+                  url: '/',
+                  templateUrl: 'templates/home.html',
+                  controller: 'LogController'
+              })
+          .state('login', {
+              url: '/login',
+              templateUrl: 'templates/login.html'
           });
       }]);

@@ -1,9 +1,8 @@
-import angular from 'angular';
-import {appName} from '../utils/constants';
+import {app} from '../bootstrap';
 import HeaderController from './HeaderController';
-import LogController from './LogController';
-
-const app = angular.module(appName);
+import FooterController from './FooterController';
+import HomeController from './HomeController';
 
 app.controller('HeaderController', HeaderController);
-app.controller('LogController', LogController);
+app.controller('FooterController', FooterController);
+app.controller('HomeController', HomeController);

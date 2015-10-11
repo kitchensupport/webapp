@@ -1,0 +1,11 @@
+<md-card>
+  <md-button class="md-raised" ng-click="getLogs()">Load the logs.</md-button>
+   <md-list>
+      <md-list-item class="md-2-line" ng-repeat="log in logs">
+        <div class="md-list-item-text">
+          <p>{{log.ip}}</p>
+          <p>{{log.method}} {{log.requested}}</p>
+        </div>
+      </md-list-item>
+   </md-list>
+ </md-card>
