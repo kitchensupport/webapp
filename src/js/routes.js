@@ -1,7 +1,7 @@
 import {app} from './bootstrap';
 
-app.config(['$stateProvider', '$urlRouterProvider',
-      ($stateProvider, $urlRouterProvider) => {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+      ($stateProvider, $urlRouterProvider, $locationProvider) => {
           $urlRouterProvider.otherwise('/');
 
           $stateProvider
@@ -14,4 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
               url: '/login',
               templateUrl: 'templates/login.html'
           });
+
+          // Removes the '#' from page URLs.
+          $locationProvider.html5Mode(true);
       }]);
