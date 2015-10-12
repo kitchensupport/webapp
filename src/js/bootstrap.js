@@ -1,4 +1,4 @@
 import angular from 'angular';
 import {appName} from './utils/constants';
 
-angular.module(appName, []);
+export const app = angular.module(appName, ['ngMaterial', 'ui.router']);

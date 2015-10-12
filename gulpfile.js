@@ -7,7 +7,6 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
-const sasslint = require('gulp-sass-lint');
 const autoprefixer = require('gulp-autoprefixer');
 const minify = require('gulp-minify-css');
 const rename = require('gulp-rename');
@@ -24,14 +23,12 @@ gulp.task('lint:js', () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('lint:sass', () => {
-    return gulp.src('src/sass/**/*.scss')
-        .pipe(sasslint())
-        .pipe(sasslint.format())
-        .pipe(sasslint.failOnError());
-});
+gulp.task('build', ['build:js', 'build:sass', 'build:html']);
 
-gulp.task('build', ['build:js', 'build:sass']);
+gulp.task('build:html', () => {
+    return gulp.src('src/templates/**/*')
+        .pipe(gulp.dest('dist/templates'));
+});
 
 gulp.task('build:js', ['lint:js'], () => {
     return browserify('src/js/app.js', {debug: true})
@@ -41,7 +38,7 @@ gulp.task('build:js', ['lint:js'], () => {
         .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('build:sass', ['lint:sass'], () => {
+gulp.task('build:sass', [], () => {
     return gulp.src('src/sass/app.scss')
         .pipe(sass())
         .pipe(autoprefixer())
@@ -53,4 +50,5 @@ gulp.task('build:sass', ['lint:sass'], () => {
 gulp.task('watch', ['build'], () => {
     gulp.watch('src/js/**/*.js', ['build:js']);
     gulp.watch('src/sass/**/*.scss', ['build:sass']);
+    gulp.watch('templates/**/*.html', ['build:html']);
 });
