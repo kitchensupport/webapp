@@ -50,5 +50,5 @@ gulp.task('build:sass', [], () => {
 gulp.task('watch', ['build'], () => {
     gulp.watch('src/js/**/*.js', ['build:js']);
     gulp.watch('src/sass/**/*.scss', ['build:sass']);
-    gulp.watch('templates/**/*.html', ['build:html']);
+    gulp.watch('src/templates/**/*.html', ['build:html']);
 });

@@ -2,8 +2,11 @@
   <div class="md-toolbar-tools">
     <a ui-sref="home">Kitchen Support</a>
     <span flex></span>
-    <md-button ui-sref="login">
+    <md-button ng-if="token === undefined" ui-sref="login">
       Login
+    </md-button>
+    <md-button ng-if="token !== undefined" ui-sref="logout">
+      Logout
     </md-button>
   </div>
 </md-toolbar>

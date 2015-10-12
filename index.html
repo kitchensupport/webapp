@@ -5,22 +5,24 @@
       <meta name="viewport" content="width=device-width initial-scale=1 maximum-scale=1 user-scalable=no">
       <meta name="mobile-web-app-capable" content="yes">
       <meta name="apple-mobile-web-app-capable" content="yes">
-      <link rel="stylesheet" href="https://rawgit.com/angular/bower-material/master/angular-material.css" />
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic" />
       <link rel="stylesheet" href="css/app.min.css" />
       <base href="/">
   </head>
-  <body>
+  <body ng-controller="AuthController">
       <div header></div>
       <div id="main" class="container" ui-view></div>
       <div footer></div>
 
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
       <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
-      <script src="https://rawgit.com/angular/bower-material/master/angular-material.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-cookies.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.6/angular-messages.min.js"></script>
 
       <script src="js/app.min.js"></script>
   </body>
