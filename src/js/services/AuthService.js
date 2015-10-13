@@ -24,7 +24,7 @@ function AuthService($rootScope, $http, $cookies) {
                     callback('SUCCESS');
                     return 'SUCCESS';
                 })
-                .error((err) => {
+                .error(() => {
                     callback('FAILURE');
                     return 'FAILURE';
                 });
