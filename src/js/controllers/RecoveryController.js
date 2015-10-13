@@ -34,8 +34,6 @@ function RecoveryController($scope, $http) {
             $scope.recoverSubmitting = false;
             $scope.recoverForm.general.issue = true;
         }
-
-        $scope.recoverFormSuccess = true;
     };
 }
 
