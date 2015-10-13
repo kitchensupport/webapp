@@ -6,7 +6,6 @@ function AuthService($rootScope, $http, $cookies) {
             $http.get(`http://api.kitchen.support/account?token=${token}`)
             .success((response) => {
                 currentUser = response.user;
-                $rootScope.$broadcast('event:auth-login', currentUser);
             });
         },
         login: (email, password, remember, callback) => {

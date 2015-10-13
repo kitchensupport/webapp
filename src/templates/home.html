@@ -1,2 +1,9 @@
-<h1>Welcome to Kitchen Support!</h1>
-<h4>Enjoy your stay!</h4>
+<div ng-if="!auth.loggedIn">
+  <h1>Welcome to Kitchen Support!</h1>
+  <h4>Enjoy your stay!</h4>
+</div>
+
+<div ng-if="auth.loggedIn">
+  <h1>Welcome to Kitchen Support, <span ng-bind="auth.user.email"></span>!</h1>
+  <h4>Enjoy your stay!</h4>
+</div>
