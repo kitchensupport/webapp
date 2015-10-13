@@ -7,6 +7,7 @@ function MainController($scope, $cookies, AuthService) {
         AuthService.loginToken($cookies.ksLoginToken);
     }
 
+    // Update the scope whenever user information changes.
     $scope.$watch(AuthService.isLoggedIn, (isLoggedIn) => {
         $scope.auth.loggedIn = isLoggedIn;
         $scope.auth.user = AuthService.currentUser();
