@@ -1,1 +1,5 @@
-// we will require all of our services here
+import {app} from '../bootstrap';
+
+import AuthService from './AuthService';
+
+app.factory('AuthService', AuthService);

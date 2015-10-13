@@ -1,4 +1,4 @@
-function RegistrationController($scope, $http, $cookies, $state) {
+function RegistrationController($scope, $http, $cookies, $state, AuthService) {
     $scope.registerSubmitting = false;
 
     $scope.register = () => {
@@ -27,10 +27,8 @@ function RegistrationController($scope, $http, $cookies, $state) {
             }).success((response) => {
                 console.log(`Success Registering: '${JSON.stringify(response)}'.`);
 
-                // Store the new user's token in local storage.
-                $cookies.auth = response.user.token;
-
-                $scope.token = response.user.token;
+                // Log the user in.
+                AuthService.loginToken(response.user.token);
 
                 // Redirect to homepage after registering.
                 // TODO: Redirect to email authentication view.
@@ -50,4 +48,4 @@ function RegistrationController($scope, $http, $cookies, $state) {
     };
 }
 
-export default ['$scope', '$http', '$cookies', '$state', RegistrationController];
+export default ['$scope', '$http', '$cookies', '$state', 'AuthService', RegistrationController];
