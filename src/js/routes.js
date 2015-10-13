@@ -1,7 +1,7 @@
 import {app} from './bootstrap';
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-      ($stateProvider, $urlRouterProvider, $locationProvider) => {
+app.config(['$stateProvider', '$urlRouterProvider',
+      ($stateProvider, $urlRouterProvider) => {
           $urlRouterProvider.otherwise('/');
 
           $stateProvider
@@ -30,7 +30,4 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                   templateUrl: 'templates/forgot-password-token.html',
                   controller: 'RecoveryNewPasswordController'
               });
-
-          // Removes the '#' from page URLs.
-          $locationProvider.html5Mode(true);
       }]);

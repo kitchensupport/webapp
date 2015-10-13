@@ -24,13 +24,13 @@ function RecoveryController($scope, $http) {
             })
             .error((err) => {
                 console.log(`ERROR: '${JSON.stringify(err)}'.`);
-                $scope.recoverForm.email.invalid = true;
+                $scope.recoverForm.general.issue = true;
             })
             .finally(() => {
                 $scope.recoverSubmitting = false;
             });
         } catch (err) {
-            console.log(`Error Logging In: '${err}'.`);
+            console.log(`Error Recovering: '${err}'.`);
             $scope.recoverSubmitting = false;
             $scope.recoverForm.general.issue = true;
         }
