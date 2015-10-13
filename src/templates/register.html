@@ -1,0 +1,44 @@
+<h1>Register an account.</h1>
+<ng-messages class="message-error" for="registerForm.general">
+  <ng-message when="no-input">
+    Oops, looks like you forgot to fill out <em>all</em> of the fields...
+  </ng-message>
+  <ng-message when="issue">
+    Oops, we ran into an issue logging you in; please try again!
+  </ng-message>
+</ng-messages>
+<form ng-submit="register()">
+  <md-content layout-padding layout="column">
+    <md-input-container flex>
+      <label>Email Address</label>
+      <input ng-disabled="registerSubmitting" ng-model="account.email" type="email">
+      <ng-messages class="message-error" for="registerForm.email">
+        <ng-message when="required">
+          An email address is required.
+        </ng-message>
+        <ng-message when="taken">
+          That email address is already registered.
+        </ng-message>
+      </ng-messages>
+    </md-input-container>
+    <md-input-container flex>
+      <label>Password</label>
+      <input ng-disabled="registerSubmitting" ng-model="account.password" type="password">
+      <ng-messages class="message-error" for="registerForm.password">
+        <ng-message when="required">
+          A password is required.
+        </ng-message>
+      </ng-messages>
+    </md-input-container>
+    <md-input-container flex>
+      <label>Confirm Password</label>
+      <input ng-disabled="registerSubmitting" ng-model="account.confirm" type="password">
+      <ng-messages class="message-error" for="registerForm.confirm">
+        <ng-message when="mismatch">
+          The passwords must match.
+        </ng-message>
+      </ng-messages>
+    </md-input-container>
+  </md-content>
+  <md-button ng-disabled="registerSubmitting" class="md-raised md-primary" type="submit">Register</md-button>
+</form>

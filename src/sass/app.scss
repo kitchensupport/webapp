@@ -1,14 +1,8 @@
-body {
-    background: white;
-}
-
 #main {
   margin: auto;
   padding: 0px 5% 15px 5%;
 }
 
-#login-submit {
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
+.message-error {
+  color: #F44336;
 }
