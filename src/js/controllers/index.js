@@ -4,7 +4,6 @@ import FooterController from './FooterController';
 import HomeController from './HomeController';
 import LoginController from './LoginController';
 import RegistrationController from './RegistrationController';
-import AuthController from './AuthController';
 import RecoveryController from './RecoveryController';
 import RecoveryNewPasswordController from './RecoveryNewPasswordController';
 
@@ -13,6 +12,5 @@ app.controller('FooterController', FooterController);
 app.controller('HomeController', HomeController);
 app.controller('LoginController', LoginController);
 app.controller('RegistrationController', RegistrationController);
-app.controller('AuthController', AuthController);
 app.controller('RecoveryController', RecoveryController);
 app.controller('RecoveryNewPasswordController', RecoveryNewPasswordController);
