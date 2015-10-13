@@ -1,4 +1,4 @@
-function LoginController($scope, $http, $state) {
+function LoginController($scope, $http, $state, AuthService) {
     $scope.loginSubmitting = false;
 
     $scope.login = () => {
@@ -16,30 +16,20 @@ function LoginController($scope, $http, $state) {
             return;
         }
 
-        try {
-            $http.post('http://api.kitchen.support/accounts/login',
-                {email: $scope.account.email, password: $scope.account.password}
-            ).success((response) => {
-                console.log(`Success Logging In: '${response}'.`);
+        AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember,
+          (response) => {
+              if (response === 'SUCCESS') {
+                  $state.go('home');
+              } else if (response === 'FAILURE') {
+                  $scope.loginForm.general.incorrect = true;
+              } else if (response === 'ERROR') {
+                  $scope.loginForm.general.issue = true;
+              }
+          }
+        );
 
-                // $cookies.token = $scope.userdata.token;
-
-                // Redirect to homepage after logging in.
-                $state.go('home');
-            })
-            .error((err) => {
-                console.log(`ERROR: '${JSON.stringify(err)}'.`);
-                $scope.loginForm.general.incorrect = true;
-            })
-            .finally(() => {
-                $scope.loginSubmitting = false;
-            });
-        } catch (err) {
-            console.log(`Error Logging In: '${err}'.`);
-            $scope.loginSubmitting = false;
-            $scope.loginForm.general.issue = true;
-        }
+        $scope.loginSubmitting = false;
     };
 }
 
-export default ['$scope', '$http', '$state', LoginController];
+export default ['$scope', '$http', '$state', 'AuthService', LoginController];
