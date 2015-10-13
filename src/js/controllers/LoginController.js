@@ -1,4 +1,4 @@
-function LoginController($scope, $http) {
+function LoginController($scope, $http, $state) {
     $scope.loginSubmitting = false;
 
     $scope.login = () => {
@@ -7,7 +7,6 @@ function LoginController($scope, $http) {
 
         // Do some simple input validation.
         if (!$scope.account) {
-            console.log('no input.');
             $scope.loginForm.general['no-input'] = true;
             $scope.loginSubmitting = false;
             return;
@@ -22,6 +21,11 @@ function LoginController($scope, $http) {
                 {email: $scope.account.email, password: $scope.account.password}
             ).success((response) => {
                 console.log(`Success Logging In: '${response}'.`);
+
+                // $cookies.token = $scope.userdata.token;
+
+                // Redirect to homepage after logging in.
+                $state.go('home');
             })
             .error((err) => {
                 console.log(`ERROR: '${JSON.stringify(err)}'.`);
@@ -38,4 +42,4 @@ function LoginController($scope, $http) {
     };
 }
 
-export default ['$scope', '$http', LoginController];
+export default ['$scope', '$http', '$state', LoginController];

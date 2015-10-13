@@ -1,5 +1,3 @@
-function AuthController($scope, $cookieStore) {
-    $scope.token = $cookieStore.get('token');
-}
+function AuthController($scope, $cookieStore) {}
 
 export default ['$scope', '$cookieStore', AuthController];

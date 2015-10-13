@@ -7,7 +7,6 @@ function RegistrationController($scope, $http, $cookies, $state) {
 
         // Do some simple input validation.
         if (!$scope.account) {
-            console.log('no input.');
             $scope.registerForm.general['no-input'] = true;
             $scope.registerSubmitting = false;
             return;
@@ -22,9 +21,10 @@ function RegistrationController($scope, $http, $cookies, $state) {
         }
 
         try {
-            $http.post('http://api.kitchen.support/accounts/create',
-                {email: $scope.account.email, password: $scope.account.password}
-            ).success((response) => {
+            $http.post('http://api.kitchen.support/accounts/create', {
+                email: $scope.account.email,
+                password: $scope.account.password
+            }).success((response) => {
                 console.log(`Success Registering: '${JSON.stringify(response)}'.`);
 
                 // Store the new user's token in local storage.
@@ -32,7 +32,8 @@ function RegistrationController($scope, $http, $cookies, $state) {
 
                 $scope.token = response.user.token;
 
-                // Redirect to homepage after logging in.
+                // Redirect to homepage after registering.
+                // TODO: Redirect to email authentication view.
                 $state.go('home');
             })
             .error((err) => {

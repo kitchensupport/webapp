@@ -19,6 +19,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                   url: '/register',
                   templateUrl: 'templates/register.html',
                   controller: 'RegistrationController'
+              })
+              .state('forgot-password', {
+                  url: '/forgot-password',
+                  templateUrl: 'templates/forgot-password.html',
+                  controller: 'RecoveryController'
+              })
+              .state('forgot-password-token', {
+                  url: '/forgot-password/:token',
+                  templateUrl: 'templates/forgot-password-token.html',
+                  controller: 'RecoveryNewPasswordController'
               });
 
           // Removes the '#' from page URLs.
