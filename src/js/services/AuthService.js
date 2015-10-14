@@ -35,7 +35,6 @@ function AuthService($http, $cookies) {
             }
         },
         logout: () => {
-            console.log('logout');
             currentUser = undefined;
             $cookies.ksLoginToken = undefined;
         },
