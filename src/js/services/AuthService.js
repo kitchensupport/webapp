@@ -1,5 +1,7 @@
-function AuthService($http, $cookies) {
+function AuthService($http, $cookies, $mdDialog) {
     let currentUser;
+    let modalIsOpen = false;
+    let modal;
 
     return {
         loginToken: (token) => {
@@ -41,8 +43,33 @@ function AuthService($http, $cookies) {
         isLoggedIn: () => {
             return !!currentUser;
         },
-        currentUser: () => { return currentUser; }
+        currentUser: () => { return currentUser; },
+
+        // login modal functions
+        loginModal: {
+            open: ($event) => {
+                modalIsOpen = true;
+                $mdDialog.show({
+                    templateUrl: 'templates/login-modal.html',
+                    controller: 'LoginController',
+                    clickOutsideToClose: true,
+                    targetEvent: $event,
+                    onRemoving: () => { modalIsOpen = false; }
+                });
+            },
+            close: () => {
+                if (modalIsOpen) {
+                    $mdDialog.hide(modal);
+                }
+            },
+            getModal: () => {
+                return modal;
+            },
+            isOpen: () => {
+                return modalIsOpen;
+            }
+        }
     };
 }
 
-export default ['$http', '$cookies', AuthService];
+export default ['$http', '$cookies', '$mdDialog', AuthService];

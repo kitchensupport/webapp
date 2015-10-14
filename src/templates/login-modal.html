@@ -13,7 +13,7 @@
       </ng-message>
     </ng-messages>
     <form ng-submit="login()" name="loginForm">
-      <md-content layout-padding layout="column">
+      <md-content layout-padding>
         <md-input-container flex>
           <label>Email Address</label>
           <input ng-disabled="loginSubmitting" ng-model="account.email" type="email">
@@ -28,7 +28,7 @@
           <input ng-disabled="loginSubmitting" ng-model="account.password" type="password">
           <ng-messages class="message-error" for="loginForm.password">
             <ng-message when="required">
-              A password is required.
+              A password is required.asdasd
             </ng-message>
           </ng-messages>
         </md-input-container>
@@ -36,12 +36,14 @@
           Remember my account
         </md-checkbox>
       </md-content>
-      <md-button ng-disabled="loginSubmitting" class="md-raised" type="submit">Login</md-button>
+      <div class="modalButtons" layout="column"  layout-align="center center">
+        <md-button ng-disabled="loginSubmitting" class="md-raised md-primary" type="submit">Login</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register">Need an account?</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password">Forgot your password?</md-button>
+      </div>
     </form>
   </div>
   <div id="loginSpinner" ng-show="loginSubmitting" layout="row" layout-sm="column" layout-align="center center">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
-  <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register">Need an account?</md-button>
-  <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password">Forgot your password?</md-button>
 </div>

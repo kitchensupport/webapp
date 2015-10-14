@@ -1,4 +1,4 @@
-function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthService, AuthModalService) {
+function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthService) {
     $scope.loginSubmitting = false;
 
     $scope.login = () => {
@@ -21,10 +21,10 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
               if (response === 'SUCCESS') {
 
                   // If we're logging in through the modal, don't redirect.
-                  if (!AuthModalService.isOpen()) {
+                  if (!AuthService.loginModal.isOpen()) {
                       $state.go('home');
                   } else {
-                      AuthModalService.close();
+                      AuthService.loginModal.close();
                   }
 
               } else if (response === 'FAILURE') {
@@ -39,12 +39,12 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
     };
 
     $scope.openLoginModal = ($event) => {
-        AuthModalService.open($event);
+        AuthService.loginModal.open($event);
     };
 
     $scope.closeLoginModal = () => {
-        AuthModalService.close();
+        AuthService.loginModal.close();
     };
 }
 
-export default ['$scope', '$rootScope', '$http', '$state', '$mdDialog', 'AuthService', 'AuthModalService', LoginController];
+export default ['$scope', '$rootScope', '$http', '$state', '$mdDialog', 'AuthService', LoginController];
