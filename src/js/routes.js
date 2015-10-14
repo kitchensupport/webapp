@@ -29,5 +29,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   url: '/forgot-password/:token',
                   templateUrl: 'templates/forgot-password-token.html',
                   controller: 'RecoveryNewPasswordController'
+              })
+              .state('recipes', {
+                  url: '/recipes',
+                  templateUrl: 'templates/recipes.html',
+                  controller: 'RecipeController'
               });
       }]);

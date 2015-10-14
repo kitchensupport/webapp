@@ -1,12 +1,16 @@
-function AuthService($rootScope, $http, $cookies) {
+function AuthService($http, $cookies, $mdDialog) {
     let currentUser;
+    let modalIsOpen = false;
+    let modal;
 
     return {
         loginToken: (token) => {
-            $http.get(`http://api.kitchen.support/account?token=${token}`)
-            .success((response) => {
-                currentUser = response.user;
-            });
+            if (token) {
+                $http.get(`http://api.kitchen.support/account?token=${token}`)
+                .success((response) => {
+                    currentUser = response.user;
+                });
+            }
         },
         login: (email, password, remember, callback) => {
             try {
@@ -39,8 +43,33 @@ function AuthService($rootScope, $http, $cookies) {
         isLoggedIn: () => {
             return !!currentUser;
         },
-        currentUser: () => { return currentUser; }
+        currentUser: () => { return currentUser; },
+
+        // login modal functions
+        loginModal: {
+            open: ($event) => {
+                modalIsOpen = true;
+                $mdDialog.show({
+                    templateUrl: 'templates/login-modal.html',
+                    controller: 'LoginController',
+                    clickOutsideToClose: true,
+                    targetEvent: $event,
+                    onRemoving: () => { modalIsOpen = false; }
+                });
+            },
+            close: () => {
+                if (modalIsOpen) {
+                    $mdDialog.hide(modal);
+                }
+            },
+            getModal: () => {
+                return modal;
+            },
+            isOpen: () => {
+                return modalIsOpen;
+            }
+        }
     };
 }
 
-export default AuthService;
+export default ['$http', '$cookies', '$mdDialog', AuthService];
