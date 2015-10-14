@@ -2,7 +2,7 @@
   <div class="md-toolbar-tools">
     <a ui-sref="home">Kitchen Support</a>
     <span flex></span>
-    <md-button ng-if="!auth.loggedIn" ui-sref="login">
+    <md-button ng-if="!auth.loggedIn" ng-click="modals.loginModal($event)" ng-controller="LoginController">
       Login
     </md-button>
     <md-button ng-if="auth.loggedIn" ng-click="auth.logout()">

@@ -1,9 +1,9 @@
-function LoginController($scope, $http, $state, AuthService) {
+function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthService) {
     $scope.loginSubmitting = false;
 
     $scope.login = () => {
-        $scope.loginForm = {general: {}, email: {}, password: {}};
         $scope.loginSubmitting = true;
+        $scope.loginForm = {general: {}, email: {}, password: {}};
 
         // Do some simple input validation.
         if (!$scope.account) {
@@ -19,17 +19,44 @@ function LoginController($scope, $http, $state, AuthService) {
         AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember,
           (response) => {
               if (response === 'SUCCESS') {
-                  $state.go('home');
+
+                  // If we're logging in through the modal, don't redirect.
+                  if (!$rootScope.modals.loginModalOpen) {
+                      $state.go('home');
+                  } else {
+                      $rootScope.modals.loginModalClose();
+                  }
+
               } else if (response === 'FAILURE') {
                   $scope.loginForm.general.incorrect = true;
               } else if (response === 'ERROR') {
                   $scope.loginForm.general.issue = true;
               }
+
+              $scope.loginSubmitting = false;
           }
         );
+    };
 
-        $scope.loginSubmitting = false;
+    // Login modal
+    $rootScope.modals.loginModal = ($event) => {
+        if (!$rootScope.modals.loginModalOpen) {
+            $rootScope.modals.loginModalOpen = true;
+            $rootScope.modals.loginModal = $mdDialog.show({
+                templateUrl: 'templates/login-modal.html',
+                controller: 'LoginController',
+                clickOutsideToClose: true,
+                targetEvent: $event,
+                onRemoving: () => { $rootScope.modals.loginModalOpen = false; }
+            });
+        }
+    };
+
+    $rootScope.modals.loginModalClose = () => {
+        if ($rootScope.modals.loginModalOpen) {
+            $mdDialog.hide($rootScope.modals.loginModal);
+        }
     };
 }
 
-export default ['$scope', '$http', '$state', 'AuthService', LoginController];
+export default ['$scope', '$rootScope', '$http', '$state', '$mdDialog', 'AuthService', LoginController];

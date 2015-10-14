@@ -1,17 +1,19 @@
-function MainController($scope, $cookies, AuthService) {
-    $scope.auth = {};
-    $scope.auth.logout = AuthService.logout;
+function MainController($rootScope, $cookies, AuthService) {
+    $rootScope.modals = {};
+    $rootScope.auth = {};
+    $rootScope.auth.logout = AuthService.logout;
 
     // Check to see if there's a token in storage.
-    if (!$scope.auth.loggedIn && $cookies.ksLoginToken !== undefined) {
+    if (!$rootScope.auth.loggedIn && $cookies.ksLoginToken !== undefined) {
         AuthService.loginToken($cookies.ksLoginToken);
     }
 
     // Update the scope whenever user information changes.
-    $scope.$watch(AuthService.isLoggedIn, (isLoggedIn) => {
-        $scope.auth.loggedIn = isLoggedIn;
-        $scope.auth.user = AuthService.currentUser();
+    $rootScope.$watch(AuthService.isLoggedIn, (isLoggedIn) => {
+        console.log(`login changed: ${isLoggedIn}`);
+        $rootScope.auth.loggedIn = isLoggedIn;
+        $rootScope.auth.user = AuthService.currentUser();
     });
 }
 
-export default ['$scope', '$cookies', 'AuthService', MainController];
+export default ['$rootScope', '$cookies', 'AuthService', MainController];

@@ -6,3 +6,16 @@
 .message-error {
   color: #F44336;
 }
+
+#loginModal {
+  h1 {
+    text-align: center;
+  }
+  button {
+      text-align: center;
+  }
+}
+
+md-dialog {
+  padding: 10px;
+}

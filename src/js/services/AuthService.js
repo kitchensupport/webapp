@@ -1,12 +1,14 @@
-function AuthService($rootScope, $http, $cookies) {
+function AuthService($http, $cookies) {
     let currentUser;
 
     return {
         loginToken: (token) => {
-            $http.get(`http://api.kitchen.support/account?token=${token}`)
-            .success((response) => {
-                currentUser = response.user;
-            });
+            if (token) {
+                $http.get(`http://api.kitchen.support/account?token=${token}`)
+                .success((response) => {
+                    currentUser = response.user;
+                });
+            }
         },
         login: (email, password, remember, callback) => {
             try {
@@ -33,6 +35,7 @@ function AuthService($rootScope, $http, $cookies) {
             }
         },
         logout: () => {
+            console.log('logout');
             currentUser = undefined;
             $cookies.ksLoginToken = undefined;
         },
@@ -43,4 +46,4 @@ function AuthService($rootScope, $http, $cookies) {
     };
 }
 
-export default AuthService;
+export default ['$http', '$cookies', AuthService];
