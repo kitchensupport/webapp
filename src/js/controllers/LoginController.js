@@ -1,4 +1,4 @@
-function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthService) {
+function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthService, AuthModalService) {
     $scope.loginSubmitting = false;
 
     $scope.login = () => {
@@ -21,10 +21,10 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
               if (response === 'SUCCESS') {
 
                   // If we're logging in through the modal, don't redirect.
-                  if (!$rootScope.modals.loginModalOpen) {
+                  if (!AuthModalService.isOpen()) {
                       $state.go('home');
                   } else {
-                      $rootScope.modals.loginModalClose();
+                      AuthModalService.close();
                   }
 
               } else if (response === 'FAILURE') {
@@ -38,25 +38,13 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
         );
     };
 
-    // Login modal
-    $rootScope.modals.loginModal = ($event) => {
-        if (!$rootScope.modals.loginModalOpen) {
-            $rootScope.modals.loginModalOpen = true;
-            $rootScope.modals.loginModal = $mdDialog.show({
-                templateUrl: 'templates/login-modal.html',
-                controller: 'LoginController',
-                clickOutsideToClose: true,
-                targetEvent: $event,
-                onRemoving: () => { $rootScope.modals.loginModalOpen = false; }
-            });
-        }
+    $scope.openLoginModal = ($event) => {
+        AuthModalService.open($event);
     };
 
-    $rootScope.modals.loginModalClose = () => {
-        if ($rootScope.modals.loginModalOpen) {
-            $mdDialog.hide($rootScope.modals.loginModal);
-        }
+    $scope.closeLoginModal = () => {
+        AuthModalService.close();
     };
 }
 
-export default ['$scope', '$rootScope', '$http', '$state', '$mdDialog', 'AuthService', LoginController];
+export default ['$scope', '$rootScope', '$http', '$state', '$mdDialog', 'AuthService', 'AuthModalService', LoginController];

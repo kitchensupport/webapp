@@ -42,6 +42,6 @@
   <div id="loginSpinner" ng-show="loginSubmitting" layout="row" layout-sm="column" layout-align="center center">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
-  <md-button ng-click="$root.modals.loginModalClose()" class="md-raised" ui-sref="register">Need an account?</md-button>
-  <md-button ng-click="$root.modals.loginModalClose()" class="md-raised" ui-sref="forgot-password">Forgot your password?</md-button>
+  <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register">Need an account?</md-button>
+  <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password">Forgot your password?</md-button>
 </div>
