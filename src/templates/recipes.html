@@ -4,13 +4,16 @@
   <section class="recipes">
     <h3>Recommended For You</h3>
      <md-list layout="row" layout-margin layout-wrap data-ng-init="getFeaturedRecipes()">
-        <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in featuredRecipes">
+        <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in featuredRecipes.data">
           <div class="md-3-line md-whiteframe-z1">
             <p ng-bind="recipe.recipeName"></p>
             <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}"></div>
           </div>
         </md-list-item>
       </md-list>
+      <div ng-show="featuredRecipes.loading" layout="row" layout-sm="column" layout-align="center center">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
   </section>
 </div>
 
@@ -18,12 +21,15 @@
     <section class="recipes">
       <h3>Check Out These Burritos</h3>
       <md-list layout="row" layout-margin layout-wrap data-ng-init="getSearchRecipes('burrito')">
-         <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes['burrito']">
+         <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes['burrito'].data">
            <div class="md-3-line md-whiteframe-z1">
              <p ng-bind="recipe.recipeName"></p>
              <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}"></div>
            </div>
          </md-list-item>
        </md-list>
+       <div ng-show="searchedRecipes['burrito'].loading" layout="row" layout-sm="column" layout-align="center center">
+           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+       </div>
     </section>
 </div>

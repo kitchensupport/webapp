@@ -1,12 +1,13 @@
 function RecipeController($scope, $http) {
-    $scope.featuredRecipes = {};
+    $scope.featuredRecipes = {loading: true, data: {}};
     $scope.searchedRecipes = {};
 
     $scope.getFeaturedRecipes = () => {
         try {
             $http.get('http://localhost:8000/recipe/featured')
                 .success((response) => {
-                    $scope.featuredRecipes = response.data.matches;
+                    $scope.featuredRecipes.loading = false;
+                    $scope.featuredRecipes.data = response.data.matches;
                     return 'SUCCESS';
                 })
                 .error(() => {
@@ -16,12 +17,14 @@ function RecipeController($scope, $http) {
             return 'ERROR';
         }
     };
-a
+
     $scope.getSearchRecipes = (searchTerm) => {
+        $scope.searchedRecipes[searchTerm] = {loading: true, data: {}};
         try {
             $http.get(`http://localhost:8000/recipe/search/${searchTerm}`)
                 .success((response) => {
-                    $scope.searchedRecipes[searchTerm] = response.data.matches;
+                    $scope.searchedRecipes[searchTerm].loading = false;
+                    $scope.searchedRecipes[searchTerm].data = response.data.matches;
                     console.log(response.data.matches);
                     return 'SUCCESS';
                 })
