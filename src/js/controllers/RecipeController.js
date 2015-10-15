@@ -4,7 +4,7 @@ function RecipeController($scope, $http) {
 
     $scope.getFeaturedRecipes = () => {
         try {
-            $http.get('http://api.kitchen.support/recipe/featured')
+            $http.get('http://api.kitchen.support/recipes/featured')
                 .success((response) => {
                     $scope.featuredRecipes.loading = false;
                     $scope.featuredRecipes.data = response.data.matches;
@@ -21,7 +21,7 @@ function RecipeController($scope, $http) {
     $scope.getSearchRecipes = (searchTerm) => {
         $scope.searchedRecipes[searchTerm] = {loading: true, data: {}};
         try {
-            $http.get(`http://api.kitchen.support/recipe/search/${searchTerm}`)
+            $http.get(`http://api.kitchen.support/recipes/search/${searchTerm}`)
                 .success((response) => {
                     $scope.searchedRecipes[searchTerm].loading = false;
                     $scope.searchedRecipes[searchTerm].data = response.data.matches;
