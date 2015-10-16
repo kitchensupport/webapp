@@ -27,7 +27,12 @@ md-dialog {
 .recipes md-list-item {
   padding: 0px 16px 16px 16px;
 
+  .md-whiteframe-z1 {
+      cursor:pointer;
+  }
+
   .recipeTitle {
+    margin-top: 0px;
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -55,7 +60,7 @@ md-dialog {
   }
 
   .recipeImage {
-      height: 200px;
+    height: 200px;
   }
 
   div {

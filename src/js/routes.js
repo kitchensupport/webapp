@@ -29,5 +29,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   url: '/recipes',
                   templateUrl: 'templates/recipes.html',
                   controller: 'RecipeController'
+              })
+              .state('recipeView', {
+                  url: '/recipes/recipe/:recipeId',
+                  templateUrl: 'templates/recipe.html',
+                  controller: 'RecipeViewController'
               });
       }]);

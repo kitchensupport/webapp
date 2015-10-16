@@ -8,6 +8,7 @@ import RegistrationController from './RegistrationController';
 import RecoveryController from './RecoveryController';
 import RecoveryNewPasswordController from './RecoveryNewPasswordController';
 import RecipeController from './RecipeController';
+import RecipeViewController from './RecipeViewController';
 
 app.controller('MainController', MainController);
 app.controller('HeaderController', HeaderController);
@@ -18,3 +19,4 @@ app.controller('RegistrationController', RegistrationController);
 app.controller('RecoveryController', RecoveryController);
 app.controller('RecoveryNewPasswordController', RecoveryNewPasswordController);
 app.controller('RecipeController', RecipeController);
+app.controller('RecipeViewController', RecipeViewController);

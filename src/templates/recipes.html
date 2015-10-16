@@ -5,7 +5,7 @@
     <h3>Recommended For You</h3>
      <md-list ng-show="featuredRecipes.status === 200" layout="row" layout-margin layout-wrap data-ng-init="getFeaturedRecipes()">
         <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in featuredRecipes.data">
-          <div class="md-3-line md-whiteframe-z1">
+          <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
             <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}">
                 <p class="recipeTitle" ng-bind="recipe.recipeName"></p>
             </div>
@@ -35,21 +35,21 @@
       <h3>Check Out These Burritos</h3>
       <md-list ng-show="searchedRecipes['burrito'].status === 200" layout="row" layout-margin layout-wrap data-ng-init="getSearchRecipes('burrito')">
          <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes['burrito'].data">
-           <div class="md-3-line md-whiteframe-z1">
-             <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}">
-                 <p class="recipeTitle" ng-bind="recipe.recipeName"></p>
-             </div>
-             <div class="recipeDescription">
-               <span class="rating">
-                 <span ng-repeat="star in recipe.ratingArray track by $index">
-                   <i ng-if="star" class="fa fa-star"></i>
-                   <i ng-if="!star" class="fa fa-star-o"></i>
+             <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
+               <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}">
+                   <p class="recipeTitle" ng-bind="recipe.recipeName"></p>
+               </div>
+               <div class="recipeDescription">
+                 <span class="rating">
+                   <span ng-repeat="star in recipe.ratingArray track by $index">
+                     <i ng-if="star" class="fa fa-star"></i>
+                     <i ng-if="!star" class="fa fa-star-o"></i>
+                   </span>
                  </span>
-               </span>
-               <span ng-if="recipe.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.totalTimeString}}</span>
+                 <span ng-if="recipe.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.totalTimeString}}</span>
+               </div>
              </div>
-           </div>
-         </md-list-item>
+           </md-list-item>
        </md-list>
        <div ng-show="searchedRecipes['burrito'].status === -1" layout="row" layout-sm="column" layout-align="center center">
            <md-progress-circular md-mode="indeterminate"></md-progress-circular>

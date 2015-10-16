@@ -11,6 +11,7 @@ function RecipeController($scope, $http) {
                     $scope.featuredRecipes.data = response.data.data.matches;
 
                     $scope.featuredRecipes.data.forEach((part, recipe, recipes) => {
+                        recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].id}'})`;
                         recipes[recipe].totalTimeString = `${recipes[recipe].totalTimeInSeconds / 60} minutes`;
                         recipes[recipe].ratingArray = [];
                         for (let i = 0;i < recipes[recipe].rating;i++) {
@@ -44,6 +45,7 @@ function RecipeController($scope, $http) {
                     $scope.searchedRecipes[searchTerm].data = response.data.data.matches;
 
                     $scope.searchedRecipes[searchTerm].data.forEach((part, recipe, recipes) => {
+                        recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].id}'})`;
                         if (recipes[recipe].totalTimeInSeconds && recipes[recipe].totalTimeInSeconds > 1) {
                             recipes[recipe].totalTimeString = `${recipes[recipe].totalTimeInSeconds / 60} minutes`;
                         }
