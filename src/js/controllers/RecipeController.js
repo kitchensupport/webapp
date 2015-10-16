@@ -3,7 +3,7 @@ function RecipeController($scope, $http) {
     $scope.searchedRecipes = {};
 
     $scope.getFeaturedRecipes = () => {
-        $http.get('http://localhost:8000/recipes/featured')
+        $http.get('http://api.kitchen.support/recipes/featured')
             .then((response) => {
                 console.log(JSON.stringify(response));
                 $scope.featuredRecipes.status = response.status;
@@ -36,7 +36,7 @@ function RecipeController($scope, $http) {
     $scope.getSearchRecipes = (searchTerm) => {
         $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
 
-        $http.get(`http://localhost:8000/recipes/search/${searchTerm}`)
+        $http.get(`http://api.kitchen.support/recipes/search/${searchTerm}`)
             .then((response) => {
                 $scope.searchedRecipes[searchTerm].status = response.status;
 
