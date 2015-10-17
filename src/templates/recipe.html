@@ -1,7 +1,11 @@
 <div ng-init="getRecipe()">
   <h1>Recipe Information</h1>
   <div ng-show="recipe.status === 200">
-    <h2 ng-bind="recipe.data.name"></h2>
+    <h2>
+      <i ng-if="!recipe.data.favorited" ng-click="favoriteRecipe()" class="favorite fa fa-heart-o"></i>
+      <i ng-if="recipe.data.favorited" ng-click="unFavoriteRecipe()" class="favorited fa fa-heart"></i>
+      <span ng-bind="recipe.data.name"></span>
+    </h2>
 
     <img ng-src="{{recipe.data.images[0].hostedLargeUrl}}">
     </br>

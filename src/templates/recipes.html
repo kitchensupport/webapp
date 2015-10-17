@@ -7,7 +7,12 @@
         <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in featuredRecipes.data">
           <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
             <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}">
-                <p class="recipeTitle" ng-bind="recipe.recipeName"></p>
+                <div ng-if="recipe.favorited">
+                  <p class="recipeTitle"><i class="fa fa-heart"></i> <span  ng-bind="recipe.recipeName"></span></p>
+                </div>
+                <div ng-if="!recipe.favorited">
+                  <p class="recipeTitle"><span  ng-bind="recipe.recipeName"></span></p>
+                </div>
             </div>
             <div class="recipeDescription">
               <span class="rating">
@@ -37,7 +42,12 @@
          <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes['burrito'].data">
              <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
                <div class="recipeImage" ng-style="{'background-image':'url({{recipe.smallImageUrls[0]}})'}">
-                   <p class="recipeTitle" ng-bind="recipe.recipeName"></p>
+                 <div ng-if="recipe.favorited">
+                   <p class="recipeTitle"><i class="fa fa-heart"></i> <span  ng-bind="recipe.recipeName"></span></p>
+                 </div>
+                 <div ng-if="!recipe.favorited">
+                   <p class="recipeTitle"><span  ng-bind="recipe.recipeName"></span></p>
+                 </div>
                </div>
                <div class="recipeDescription">
                  <span class="rating">
