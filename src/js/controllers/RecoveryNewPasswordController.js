@@ -17,33 +17,20 @@ function RecoveryNewPasswordController($scope, $http, $state, $stateParams) {
             return;
         }
 
-        try {
+        $http.post('http://api.kitchen.support/accounts/reset/confirm', {
+            reset_token: $stateParams.token,
+            password: $scope.account.password
+        }).then((response) => {
+            console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
 
-            $http.post('http://api.kitchen.support/accounts/recover', {
-                token: $stateParams.token,
-                password: $scope.account.password
-            }).success((response) => {
-                console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
-
-                // Store the new user's token in local storage.
-                // $cookies.auth = response.user.token;
-
-                $scope.token = response.user.token;
-
-                // Redirect to homepage after recovering.
-                $state.go('home');
-            })
-            .error((err) => {
-                $scope.recoverForm.general.issue = true;
-                console.log(`ERROR: '${JSON.stringify(err)}'.`);
-            })
-            .finally(() => {
-                $scope.recoverSubmitting = false;
-            });
-        } catch (err) {
-            $scope.recoverSubmitting = false;
+            // Redirect to homepage after recovering.
+            $state.go('home');
+        }).catch((err) => {
             $scope.recoverForm.general.issue = true;
-        }
+            console.log(`ERROR: '${JSON.stringify(err)}'.`);
+        }).finally(() => {
+            $scope.recoverSubmitting = false;
+        });
     };
 }
 
