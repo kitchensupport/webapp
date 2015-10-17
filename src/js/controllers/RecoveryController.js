@@ -13,27 +13,19 @@ function RecoveryController($scope, $http) {
             return;
         }
 
-        try {
-            $http.get('http://api.kitchen.support/accounts/recover', {
-                email: $scope.account.email
-            }).success((response) => {
-                console.log(`Success requesting recover: '${response}'.`);
+        $http.post('http://api.kitchen.support/accounts/reset/request', {
+            email: $scope.account.email
+        }).then((response) => {
+            console.log(`Success requesting recover: '${response}'.`);
 
-                // Hide the form and display 'message sent' div.
-                $scope.recoverFormSuccess = true;
-            })
-            .error((err) => {
-                console.log(`ERROR: '${JSON.stringify(err)}'.`);
-                $scope.recoverForm.general.issue = true;
-            })
-            .finally(() => {
-                $scope.recoverSubmitting = false;
-            });
-        } catch (err) {
-            console.log(`Error Recovering: '${err}'.`);
-            $scope.recoverSubmitting = false;
+            // Hide the form and display 'message sent' div.
+            $scope.recoverFormSuccess = true;
+        }).catch((err) => {
+            console.log(`ERROR: '${JSON.stringify(err)}'.`);
             $scope.recoverForm.general.issue = true;
-        }
+        }).finally(() => {
+            $scope.recoverSubmitting = false;
+        });
     };
 }
 
