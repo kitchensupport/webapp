@@ -14,11 +14,11 @@ function RecoveryController($scope, $http, AuthService) {
         }
 
         AuthService.forgotPassword($scope.account.email,
-            (response) => {
+            () => {
                 $scope.recoverFormSuccess = true;
                 $scope.recoverSubmitting = false;
             },
-            (err) => {
+            () => {
                 $scope.recoverForm.general.issue = true;
                 $scope.recoverSubmitting = false;
             }
