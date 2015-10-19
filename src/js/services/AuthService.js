@@ -4,41 +4,69 @@ function AuthService($http, $cookies, $mdDialog) {
     let modal;
 
     return {
-        loginToken: (token) => {
-            if (token) {
+        loginToken: (token, success, error) => {
+            if (token && token.length > 0) {
                 $http.get(`http://api.kitchen.support/account?token=${token}`)
-                .success((response) => {
-                    currentUser = response.user;
+                .then((response) => {
+                    currentUser = response.data.user;
+                    success(response);
+                }).catch((err) => {
+                    console.error('Token Login Error', err);
+                    error(err);
                 });
             }
         },
-        login: (email, password, remember, callback) => {
-            try {
-                $http.post('http://api.kitchen.support/accounts/login',
-                    {email, password}
-                ).success((response) => {
-                    currentUser = response.user;
+        register: (email, password, success, error) => {
+            $http.post('http://api.kitchen.support/accounts/create', {
+                email,
+                password
+            }).then((response) => {
+                success(response);
+            }).catch((err) => {
+                error(err);
+            });
+        },
+        login: (email, password, remember, success, error) => {
+            $http.post('http://api.kitchen.support/accounts/login', {
+                email,
+                password
+            }).then((response) => {
+                currentUser = response.data.user;
 
-                    // Store user info in cookies.
-                    if (remember) {
-                        $cookies.ksLoginToken = currentUser.token;
-                    }
+                // Store user info in cookies.
+                if (remember) {
+                    $cookies.ksLoginToken = response.data.user.api_token;
+                }
 
-                    callback('SUCCESS');
-                    return 'SUCCESS';
-                })
-                .error(() => {
-                    callback('FAILURE');
-                    return 'FAILURE';
-                });
-            } catch (err) {
-                callback('ERROR');
-                return 'ERROR';
-            }
+                success(response);
+            }).catch((err) => {
+                console.error('Login Error', err);
+                error(err);
+            });
+
         },
         logout: () => {
             currentUser = undefined;
             $cookies.ksLoginToken = undefined;
+        },
+        forgotPassword: (email, success, error) => {
+            $http.post('http://api.kitchen.support/accounts/reset/request', {
+                email
+            }).then((response) => {
+                success(response);
+            }).catch((err) => {
+                error(err);
+            });
+        },
+        forgotPasswordConfirm: (resetToken, password, success, error) => {
+            $http.post('http://api.kitchen.support/accounts/reset/confirm', {
+                reset_token: resetToken,
+                password
+            }).then((response) => {
+                success(response);
+            }).catch((err) => {
+                error(err);
+            });
         },
         isLoggedIn: () => {
             return !!currentUser;

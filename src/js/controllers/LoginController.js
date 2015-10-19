@@ -17,25 +17,21 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
         }
 
         AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember,
-          (response) => {
-              if (response === 'SUCCESS') {
+            () => {
+                if (!AuthService.loginModal.isOpen()) {
+                    $state.go('home');
+                } else {
 
-                  // If we're logging in through the modal, don't redirect.
-                  if (!AuthService.loginModal.isOpen()) {
-                      $state.go('home');
-                  } else {
-                      AuthService.loginModal.close();
-                  }
+                    // If we're logging in through the modal, don't redirect.
+                    AuthService.loginModal.close();
+                }
+            },
+            () => {
+                $scope.loginForm.general.incorrect = true;
+            }
+          );
 
-              } else if (response === 'FAILURE') {
-                  $scope.loginForm.general.incorrect = true;
-              } else if (response === 'ERROR') {
-                  $scope.loginForm.general.issue = true;
-              }
-
-              $scope.loginSubmitting = false;
-          }
-        );
+        $scope.loginSubmitting = false;
     };
 
     $scope.openLoginModal = ($event) => {
