@@ -16,7 +16,7 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
             return;
         }
 
-        AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember)
+        AuthService.login({email: $scope.account.email, password: $scope.account.password, remember: $scope.account.remember})
             .then(() => {
                 if (!AuthService.loginModal.isOpen()) {
                     $state.go('home');

@@ -4,33 +4,36 @@ function AuthService($http, $cookies, $mdDialog) {
     let modal;
 
     return {
-        loginToken: (token) => {
-            if (token && token.length > 0) {
-                return $http.get(`http://api.kitchen.support/account?token=${token}`)
-                .then((response) => {
-                    currentUser = response.data.user;
-                });
-            }
-        },
         register: (email, password) => {
             return $http.post('http://api.kitchen.support/accounts/create', {
                 email,
                 password
             });
         },
-        login: (email, password, remember) => {
-            return $http.post('http://api.kitchen.support/accounts/login', {
-                email,
-                password
-            }).then((response) => {
-                currentUser = response.data.user;
+        login: (args) => {
+            if ((args.email && args.email.length > 0) && (args.password && args.password.length > 0)) {
+                return $http.post('http://api.kitchen.support/accounts/login', {
+                    email: args.email,
+                    password: args.password
+                }).then((response) => {
+                    currentUser = response.data.user;
 
-                // Store user info in cookies.
-                if (remember) {
-                    $cookies.ksLoginToken = response.data.user.api_token;
-                }
-            });
+                    // Store user info in cookies.
+                    if (args.remember) {
+                        $cookies.ksLoginToken = response.data.user.api_token;
+                    }
+                });
+            } else if (args.api_token && args.api_token.length > 0) {
+                return $http.get(`http://api.kitchen.support/account?token=${args.api_token}`)
+                    .then((response) => {
+                        currentUser = response.data.user;
 
+                        // Store user info in cookies.
+                        if (args.remember) {
+                            $cookies.ksLoginToken = response.data.user.api_token;
+                        }
+                    });
+            }
         },
         logout: () => {
             currentUser = undefined;
