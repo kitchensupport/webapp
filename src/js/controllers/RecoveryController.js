@@ -1,4 +1,4 @@
-function RecoveryController($scope, $http) {
+function RecoveryController($scope, AuthService) {
     $scope.recoverSubmitting = false;
     $scope.recoverFormSuccess = false;
 
@@ -13,20 +13,16 @@ function RecoveryController($scope, $http) {
             return;
         }
 
-        $http.post('http://api.kitchen.support/accounts/reset/request', {
-            email: $scope.account.email
-        }).then((response) => {
-            console.log(`Success requesting recover: '${response}'.`);
-
-            // Hide the form and display 'message sent' div.
-            $scope.recoverFormSuccess = true;
-        }).catch((err) => {
-            console.log(`ERROR: '${JSON.stringify(err)}'.`);
-            $scope.recoverForm.general.issue = true;
-        }).finally(() => {
-            $scope.recoverSubmitting = false;
-        });
+        AuthService.forgotPassword($scope.account.email)
+            .then(() => {
+                $scope.recoverFormSuccess = true;
+                $scope.recoverSubmitting = false;
+            })
+            .catch(() => {
+                $scope.recoverForm.general.issue = true;
+                $scope.recoverSubmitting = false;
+            });
     };
 }
 
-export default ['$scope', '$http', RecoveryController];
+export default ['$scope', 'AuthService', RecoveryController];

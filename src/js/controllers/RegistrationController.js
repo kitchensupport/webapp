@@ -1,4 +1,4 @@
-function RegistrationController($scope, $http, $cookies, $state, AuthService) {
+function RegistrationController($scope, $cookies, $state, AuthService) {
     $scope.registerSubmitting = false;
 
     $scope.register = () => {
@@ -20,32 +20,20 @@ function RegistrationController($scope, $http, $cookies, $state, AuthService) {
             return;
         }
 
-        try {
-            $http.post('http://api.kitchen.support/accounts/create', {
-                email: $scope.account.email,
-                password: $scope.account.password
-            }).success((response) => {
-                console.log(`Success Registering: '${JSON.stringify(response)}'.`);
+        AuthService.register($scope.account.email, $scope.account.password)
+            .then((response) => {
 
                 // Log the user in.
-                AuthService.loginToken(response.user.token);
-
-                // Redirect to homepage after registering.
-                // TODO: Redirect to email authentication view.
-                $state.go('home');
+                AuthService.loginToken(response.data.user.api_token)
+                    .then(() => {
+                        $state.go('home');
+                    });
             })
-            .error((err) => {
+            .catch(() => {
                 $scope.registerForm.email.taken = true;
-                console.log(`ERROR: '${JSON.stringify(err)}'.`);
-            })
-            .finally(() => {
                 $scope.registerSubmitting = false;
             });
-        } catch (err) {
-            $scope.registerSubmitting = false;
-            $scope.registerForm.general.issue = true;
-        }
     };
 }
 
-export default ['$scope', '$http', '$cookies', '$state', 'AuthService', RegistrationController];
+export default ['$scope', '$cookies', '$state', 'AuthService', RegistrationController];

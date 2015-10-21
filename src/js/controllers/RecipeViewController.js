@@ -1,10 +1,10 @@
-function RecipeViewController($scope, $http, $state, $stateParams) {
+function RecipeViewController($scope, $state, $stateParams, RecipeService) {
     $scope.getRecipe = () => {
         const recipeId = $stateParams.recipeId;
 
         $scope.recipe = {status: -1, data: {}};
 
-        $http.get(`http://api.kitchen.support/recipes/recipe/${recipeId}`)
+        RecipeService.getRecipe(recipeId)
             .then((response) => {
                 $scope.recipe.status = response.status;
 
@@ -21,54 +21,24 @@ function RecipeViewController($scope, $http, $state, $stateParams) {
                     for (let i = $scope.recipe.data.rating;i < 5;i++) {
                         $scope.recipe.data.ratingArray.push(false);
                     }
-
-                    console.log($scope.recipe.data);
-
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
                 }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
+            })
+            .catch(() => {
                 $scope.recipe.status = 500;
-                return false;
             });
     };
 
     $scope.favoriteRecipe = () => {
         $scope.recipe.data.favorited = true;
 
-        $http.post(`http://api.kitchen.support/recipes/favorite`, {id: $scope.recipe.data.id})
-            .then((response) => {
-                if (response && response.status === 200) {
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
-                }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
-                return false;
-            });
+        return RecipeService.favoriteRecipe($scope.recipe.data.id);
     };
 
     $scope.unFavoriteRecipe = () => {
         $scope.recipe.data.favorited = false;
 
-        $http.post(`http://api.kitchen.support/recipes/unfavorite`, {id: $scope.recipe.data.id})
-            .then((response) => {
-                if (response && response.status === 200) {
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
-                }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
-                return false;
-            });
+        return RecipeService.unFavoriteRecipe($scope.recipe.data.id);
     };
 }
 
-export default ['$scope', '$http', '$state', '$stateParams', RecipeViewController];
+export default ['$scope', '$state', '$stateParams', 'RecipeService', RecipeViewController];

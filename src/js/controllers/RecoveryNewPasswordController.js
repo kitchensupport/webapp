@@ -1,4 +1,4 @@
-function RecoveryNewPasswordController($scope, $http, $state, $stateParams) {
+function RecoveryNewPasswordController($scope, $state, $stateParams, AuthService) {
     $scope.recoverSubmitting = false;
     $scope.recoverTokenValid = true;
 
@@ -17,21 +17,20 @@ function RecoveryNewPasswordController($scope, $http, $state, $stateParams) {
             return;
         }
 
-        $http.post('http://api.kitchen.support/accounts/reset/confirm', {
-            reset_token: $stateParams.token,
-            password: $scope.account.password
-        }).then((response) => {
-            console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
+        AuthService.forgotPasswordConfirm($stateParams.token, $scope.account.password)
+            .then((response) => {
+                console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
+                $scope.recoverSubmitting = false;
 
-            // Redirect to homepage after recovering.
-            $state.go('home');
-        }).catch((err) => {
-            $scope.recoverForm.general.issue = true;
-            console.log(`ERROR: '${JSON.stringify(err)}'.`);
-        }).finally(() => {
-            $scope.recoverSubmitting = false;
-        });
+                // Redirect to homepage after recovering.
+                $state.go('home');
+            })
+            .catch((err) => {
+                console.error('Error Resetting Password', JSON.stringify(err));
+                $scope.recoverForm.general.issue = true;
+                $scope.recoverSubmitting = false;
+            });
     };
 }
 
-export default ['$scope', '$http', '$state', '$stateParams', RecoveryNewPasswordController];
+export default ['$scope', '$state', '$stateParams', 'AuthService', RecoveryNewPasswordController];
