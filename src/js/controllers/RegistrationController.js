@@ -1,4 +1,4 @@
-function RegistrationController($scope, $http, $cookies, $state, AuthService) {
+function RegistrationController($scope, $cookies, $state, AuthService) {
     $scope.registerSubmitting = false;
 
     $scope.register = () => {
@@ -36,4 +36,4 @@ function RegistrationController($scope, $http, $cookies, $state, AuthService) {
     };
 }
 
-export default ['$scope', '$http', '$cookies', '$state', 'AuthService', RegistrationController];
+export default ['$scope', '$cookies', '$state', 'AuthService', RegistrationController];

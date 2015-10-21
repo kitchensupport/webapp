@@ -1,10 +1,10 @@
-function RecipeViewController($scope, $http, $state, $stateParams) {
+function RecipeViewController($scope, $state, $stateParams, RecipeService) {
     $scope.getRecipe = () => {
         const recipeId = $stateParams.recipeId;
 
         $scope.recipe = {status: -1, data: {}};
 
-        $http.get(`http://api.kitchen.support/recipes/recipe/${recipeId}`)
+        RecipeService.getRecipe(recipeId)
             .then((response) => {
                 $scope.recipe.status = response.status;
 
@@ -39,7 +39,7 @@ function RecipeViewController($scope, $http, $state, $stateParams) {
     $scope.favoriteRecipe = () => {
         $scope.recipe.data.favorited = true;
 
-        $http.post(`http://api.kitchen.support/recipes/favorite`, {id: $scope.recipe.data.id})
+        RecipeService.favoriteRecipe($scope.recipe.data.id)
             .then((response) => {
                 if (response && response.status === 200) {
                     return true;
@@ -56,7 +56,7 @@ function RecipeViewController($scope, $http, $state, $stateParams) {
     $scope.unFavoriteRecipe = () => {
         $scope.recipe.data.favorited = false;
 
-        $http.post(`http://api.kitchen.support/recipes/unfavorite`, {id: $scope.recipe.data.id})
+        RecipeService.unFavoriteRecipe($scope.recipe.data.id)
             .then((response) => {
                 if (response && response.status === 200) {
                     return true;
@@ -71,4 +71,4 @@ function RecipeViewController($scope, $http, $state, $stateParams) {
     };
 }
 
-export default ['$scope', '$http', '$state', '$stateParams', RecipeViewController];
+export default ['$scope', '$state', '$stateParams', 'RecipeService', RecipeViewController];

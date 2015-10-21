@@ -5,10 +5,10 @@
       Recipes
     </md-button>
     <span flex></span>
-    <md-button ng-if="!auth.loggedIn" ng-click="openLoginModal($event)" ng-controller="LoginController">
+    <md-button ng-if="!auth.user" ng-click="openLoginModal($event)" ng-controller="LoginController">
       Login
     </md-button>
-    <md-button ng-if="auth.loggedIn" ng-click="auth.logout()">
+    <md-button ng-if="auth.user" ng-click="auth.logout()">
       Logout
     </md-button>
   </div>

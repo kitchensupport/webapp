@@ -1,4 +1,4 @@
-function RecoveryNewPasswordController($scope, $http, $state, $stateParams, AuthService) {
+function RecoveryNewPasswordController($scope, $state, $stateParams, AuthService) {
     $scope.recoverSubmitting = false;
     $scope.recoverTokenValid = true;
 
@@ -33,4 +33,4 @@ function RecoveryNewPasswordController($scope, $http, $state, $stateParams, Auth
     };
 }
 
-export default ['$scope', '$http', '$state', '$stateParams', 'AuthService', RecoveryNewPasswordController];
+export default ['$scope', '$state', '$stateParams', 'AuthService', RecoveryNewPasswordController];

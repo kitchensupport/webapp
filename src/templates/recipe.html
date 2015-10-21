@@ -22,7 +22,7 @@
     <h3>Ingredients</h2>
     <div ng-if="recipe.data.ingredientLines.length">
       <md-list>
-        <md-list-item ng-repeat="ingredient in recipe.data.ingredientLines">
+        <md-list-item ng-repeat="ingredient in recipe.data.ingredientLines track by $index">
           {{ingredient}}
         </md-list-item>
       </md-list>

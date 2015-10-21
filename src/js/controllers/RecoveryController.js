@@ -1,4 +1,4 @@
-function RecoveryController($scope, $http, AuthService) {
+function RecoveryController($scope, AuthService) {
     $scope.recoverSubmitting = false;
     $scope.recoverFormSuccess = false;
 
@@ -25,4 +25,4 @@ function RecoveryController($scope, $http, AuthService) {
     };
 }
 
-export default ['$scope', '$http', 'AuthService', RecoveryController];
+export default ['$scope', 'AuthService', RecoveryController];

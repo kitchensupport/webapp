@@ -1,11 +1,10 @@
-function RecipeController($scope, $http) {
+function RecipeController($scope, RecipeService) {
     $scope.featuredRecipes = {status: -1, data: {}};
     $scope.searchedRecipes = {};
 
     $scope.getFeaturedRecipes = () => {
-        $http.get('http://api.kitchen.support/recipes/featured')
+        RecipeService.featuredRecipes()
             .then((response) => {
-                console.log(JSON.stringify(response));
                 $scope.featuredRecipes.status = response.status;
                 if (response && response.status === 200) {
                     $scope.featuredRecipes.data = response.data.data.matches;
@@ -24,11 +23,9 @@ function RecipeController($scope, $http) {
 
                     return true;
                 } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
                     return false;
                 }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
+            }, () => {
                 $scope.featuredRecipes.status = 500;
                 return false;
             });
@@ -37,7 +34,7 @@ function RecipeController($scope, $http) {
     $scope.getSearchRecipes = (searchTerm) => {
         $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
 
-        $http.get(`http://api.kitchen.support/recipes/search/${searchTerm}`)
+        RecipeService.search(searchTerm)
             .then((response) => {
                 $scope.searchedRecipes[searchTerm].status = response.status;
 
@@ -58,16 +55,11 @@ function RecipeController($scope, $http) {
                         }
                     });
 
-
-                    console.log($scope.searchedRecipes[searchTerm].data);
-
                     return true;
                 } else {
-                    console.log(`FAILb: ${JSON.stringify(response)}`);
                     return false;
                 }
-            }, (err) => {
-                console.log(`FAILa: ${JSON.stringify(err)}`);
+            }, () => {
                 $scope.searchedRecipes[searchTerm].status = 500;
                 return false;
             });
@@ -86,4 +78,4 @@ function RecipeController($scope, $http) {
     };
 }
 
-export default ['$scope', '$http', RecipeController];
+export default ['$scope', 'RecipeService', RecipeController];
