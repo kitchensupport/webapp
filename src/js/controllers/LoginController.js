@@ -16,8 +16,8 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
             return;
         }
 
-        AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember,
-            () => {
+        AuthService.login($scope.account.email, $scope.account.password, $scope.account.remember)
+            .then(() => {
                 if (!AuthService.loginModal.isOpen()) {
                     $state.go('home');
                 } else {
@@ -25,8 +25,8 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
                     // If we're logging in through the modal, don't redirect.
                     AuthService.loginModal.close();
                 }
-            },
-            () => {
+            })
+            .catch(() => {
                 $scope.loginForm.general.incorrect = true;
             }
           );

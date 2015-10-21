@@ -20,21 +20,17 @@ function RegistrationController($scope, $http, $cookies, $state, AuthService) {
             return;
         }
 
-        AuthService.register($scope.account.email, $scope.account.password,
-            (response) => {
+        AuthService.register($scope.account.email, $scope.account.password)
+            .then((response) => {
 
                 // Log the user in.
-                AuthService.loginToken(response.data.user.api_token,
-                  () => {
-                      $state.go('home');
-                  },
-                  (err) => {
-                      console.error('Error logging in after registration', err);
-                  });
-            },
-            (err) => {
+                AuthService.loginToken(response.data.user.api_token)
+                    .then(() => {
+                        $state.go('home');
+                    });
+            })
+            .catch(() => {
                 $scope.registerForm.email.taken = true;
-                console.error('Registration Error', JSON.stringify(err));
                 $scope.registerSubmitting = false;
             });
     };

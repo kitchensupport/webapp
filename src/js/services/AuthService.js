@@ -4,30 +4,22 @@ function AuthService($http, $cookies, $mdDialog) {
     let modal;
 
     return {
-        loginToken: (token, success, error) => {
+        loginToken: (token) => {
             if (token && token.length > 0) {
-                $http.get(`http://api.kitchen.support/account?token=${token}`)
+                return $http.get(`http://api.kitchen.support/account?token=${token}`)
                 .then((response) => {
                     currentUser = response.data.user;
-                    success(response);
-                }).catch((err) => {
-                    console.error('Token Login Error', err);
-                    error(err);
                 });
             }
         },
-        register: (email, password, success, error) => {
-            $http.post('http://api.kitchen.support/accounts/create', {
+        register: (email, password) => {
+            return $http.post('http://api.kitchen.support/accounts/create', {
                 email,
                 password
-            }).then((response) => {
-                success(response);
-            }).catch((err) => {
-                error(err);
             });
         },
-        login: (email, password, remember, success, error) => {
-            $http.post('http://api.kitchen.support/accounts/login', {
+        login: (email, password, remember) => {
+            return $http.post('http://api.kitchen.support/accounts/login', {
                 email,
                 password
             }).then((response) => {
@@ -37,11 +29,6 @@ function AuthService($http, $cookies, $mdDialog) {
                 if (remember) {
                     $cookies.ksLoginToken = response.data.user.api_token;
                 }
-
-                success(response);
-            }).catch((err) => {
-                console.error('Login Error', err);
-                error(err);
             });
 
         },
@@ -49,23 +36,15 @@ function AuthService($http, $cookies, $mdDialog) {
             currentUser = undefined;
             $cookies.ksLoginToken = undefined;
         },
-        forgotPassword: (email, success, error) => {
-            $http.post('http://api.kitchen.support/accounts/reset/request', {
+        forgotPassword: (email) => {
+            return $http.post('http://api.kitchen.support/accounts/reset/request', {
                 email
-            }).then((response) => {
-                success(response);
-            }).catch((err) => {
-                error(err);
             });
         },
-        forgotPasswordConfirm: (resetToken, password, success, error) => {
-            $http.post('http://api.kitchen.support/accounts/reset/confirm', {
+        forgotPasswordConfirm: (resetToken, password) => {
+            return $http.post('http://api.kitchen.support/accounts/reset/confirm', {
                 reset_token: resetToken,
                 password
-            }).then((response) => {
-                success(response);
-            }).catch((err) => {
-                error(err);
             });
         },
         isLoggedIn: () => {

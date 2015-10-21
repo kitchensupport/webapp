@@ -13,16 +13,15 @@ function RecoveryController($scope, $http, AuthService) {
             return;
         }
 
-        AuthService.forgotPassword($scope.account.email,
-            () => {
+        AuthService.forgotPassword($scope.account.email)
+            .then(() => {
                 $scope.recoverFormSuccess = true;
                 $scope.recoverSubmitting = false;
-            },
-            () => {
+            })
+            .catch(() => {
                 $scope.recoverForm.general.issue = true;
                 $scope.recoverSubmitting = false;
-            }
-        );
+            });
     };
 }
 

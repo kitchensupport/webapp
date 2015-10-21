@@ -17,20 +17,19 @@ function RecoveryNewPasswordController($scope, $http, $state, $stateParams, Auth
             return;
         }
 
-        AuthService.forgotPasswordConfirm($stateParams.token, $scope.account.password,
-            (response) => {
+        AuthService.forgotPasswordConfirm($stateParams.token, $scope.account.password)
+            .then((response) => {
                 console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
                 $scope.recoverSubmitting = false;
 
                 // Redirect to homepage after recovering.
                 $state.go('home');
-            },
-            (err) => {
+            })
+            .catch((err) => {
                 console.error('Error Resetting Password', JSON.stringify(err));
                 $scope.recoverForm.general.issue = true;
                 $scope.recoverSubmitting = false;
-            }
-        );
+            });
     };
 }
 
