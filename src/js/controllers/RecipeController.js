@@ -3,7 +3,7 @@ function RecipeController($scope, RecipeService) {
     $scope.searchedRecipes = {};
 
     $scope.getFeaturedRecipes = () => {
-        RecipeService.featuredRecipes()
+        RecipeService.getFeaturedRecipes()
             .then((response) => {
                 $scope.featuredRecipes.status = response.status;
                 if (response && response.status === 200) {
@@ -34,7 +34,7 @@ function RecipeController($scope, RecipeService) {
     $scope.getSearchRecipes = (searchTerm) => {
         $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
 
-        RecipeService.search(searchTerm)
+        RecipeService.getSearch(searchTerm)
             .then((response) => {
                 $scope.searchedRecipes[searchTerm].status = response.status;
 

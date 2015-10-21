@@ -21,53 +21,23 @@ function RecipeViewController($scope, $state, $stateParams, RecipeService) {
                     for (let i = $scope.recipe.data.rating;i < 5;i++) {
                         $scope.recipe.data.ratingArray.push(false);
                     }
-
-                    console.log($scope.recipe.data);
-
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
                 }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
+            })
+            .catch(() => {
                 $scope.recipe.status = 500;
-                return false;
             });
     };
 
     $scope.favoriteRecipe = () => {
         $scope.recipe.data.favorited = true;
 
-        RecipeService.favoriteRecipe($scope.recipe.data.id)
-            .then((response) => {
-                if (response && response.status === 200) {
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
-                }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
-                return false;
-            });
+        return RecipeService.favoriteRecipe($scope.recipe.data.id);
     };
 
     $scope.unFavoriteRecipe = () => {
         $scope.recipe.data.favorited = false;
 
-        RecipeService.unFavoriteRecipe($scope.recipe.data.id)
-            .then((response) => {
-                if (response && response.status === 200) {
-                    return true;
-                } else {
-                    console.log(`FAIL: ${JSON.stringify(response)}`);
-                    return false;
-                }
-            }, (err) => {
-                console.log(`FAIL: ${JSON.stringify(err)}`);
-                return false;
-            });
+        return RecipeService.unFavoriteRecipe($scope.recipe.data.id);
     };
 }
 

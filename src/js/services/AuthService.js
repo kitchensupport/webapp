@@ -1,6 +1,4 @@
-import {messages} from '../utils/constants';
-
-function AuthService($http, $q, $cookies, $mdDialog) {
+function AuthService($http, $cookies, $mdDialog) {
     let currentUser;
     let modalIsOpen = false;
     let modal;
@@ -49,21 +47,17 @@ function AuthService($http, $q, $cookies, $mdDialog) {
                 password
             });
         },
-        isLoggedIn: () => {
-            const deffered = $q.defer();
-
-            setTimeout(() => {
-                if (currentUser === undefined) {
-                    deffered.reject(messages.authRequired);
-                } else {
-                    deffered.resolve(currentUser);
-                }
-            }, 0);
-
-            // Fail if the user is not authenticated.
-            return deffered.promise;
+        getCurrentUser: () => {
+            return currentUser;
         },
-        getCurrentUser: () => { return currentUser; },
+        getApiToken: () => {
+            if (currentUser) {
+                return currentUser.api_token;
+            }
+
+            return '';
+
+        },
 
         // login modal functions
         loginModal: {
@@ -92,4 +86,4 @@ function AuthService($http, $q, $cookies, $mdDialog) {
     };
 }
 
-export default ['$http', '$q', '$cookies', '$mdDialog', AuthService];
+export default ['$http', '$cookies', '$mdDialog', AuthService];
