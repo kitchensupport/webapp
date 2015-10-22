@@ -104,7 +104,9 @@
         "node": true,
         "browser": true,
         "commonjs": true,
-        "es6": true
+        "es6": true,
+        "protractor": true,
+        "jasmine": true
     },
     "ecmaFeatures": {
         "arrowFunctions": true,

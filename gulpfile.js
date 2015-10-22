@@ -23,7 +23,21 @@ gulp.task('lint:js', () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('build', ['build:js', 'build:sass', 'build:html']);
+gulp.task('lint:tests', () => {
+    return gulp.src(['tests/tests/*.js'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+gulp.task('lint:tests-conf', () => {
+    return gulp.src(['tests/conf.js'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+gulp.task('build', ['build:js', 'build:sass', 'build:html', 'build:tests']);
 
 gulp.task('build:html', () => {
     return gulp.src('src/templates/**/*')
@@ -36,6 +50,19 @@ gulp.task('build:js', ['lint:js'], () => {
         .pipe(source('app.min.js'))
         .pipe(buffer())
         .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('build:tests', ['lint:tests', 'build:tests-conf'], () => {
+    return browserify('tests/main.js', {debug: true})
+        .bundle()
+        .pipe(source('main.js'))
+        .pipe(buffer())
+        .pipe(gulp.dest('dist/tests/'));
+});
+
+gulp.task('build:tests-conf', ['lint:tests-conf'], () => {
+    return gulp.src('tests/conf.js')
+        .pipe(gulp.dest('dist/tests/'));
 });
 
 gulp.task('build:sass', [], () => {
@@ -51,4 +78,6 @@ gulp.task('watch', ['build'], () => {
     gulp.watch('src/js/**/*.js', ['build:js']);
     gulp.watch('src/sass/**/*.scss', ['build:sass']);
     gulp.watch('src/templates/**/*.html', ['build:html']);
+    gulp.watch('tests/**/*.js', ['build:tests']);
+    gulp.watch('tests/conf.js', ['build:tests-conf']);
 });

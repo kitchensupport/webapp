@@ -4,7 +4,8 @@
   "description": "The web front-end for kitchen.support",
   "main": "index.html",
   "scripts": {
-    "test": "gulp build"
+    "pretest": "gulp build",
+    "test": "protractor ./dist/tests/conf.js"
   },
   "repository": {
     "type": "git",
