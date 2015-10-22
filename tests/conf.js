@@ -1,5 +1,5 @@
 exports.config = {
-    seleniumServerJar: '../node_modules/protractor/selenium/selenium-server-standalone-2.47.0.jar',
+    seleniumServerJar: '../node_modules/protractor/selenium/selenium-server-standalone-2.47.1.jar',
     chromeDriver: '../node_modules/protractor/selenium/chromeDriver',
     framework: 'jasmine2',
     specs: ['main.js'],
