@@ -28,10 +28,10 @@ function LoginController($scope, $rootScope, $http, $state, $mdDialog, AuthServi
             })
             .catch(() => {
                 $scope.loginForm.general.incorrect = true;
-            }
-          );
-
-        $scope.loginSubmitting = false;
+            })
+            .finally(() => {
+                $scope.loginSubmitting = false;
+            });
     };
 
     $scope.openLoginModal = ($event) => {

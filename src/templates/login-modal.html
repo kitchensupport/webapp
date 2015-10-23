@@ -14,8 +14,9 @@
     </ng-messages>
     <form ng-submit="login()" name="loginForm">
       <md-content>
-        <md-input-container flex>
+        <md-input-container flex class="md-icon-float">
           <label>Email Address</label>
+          <md-icon md-font-icon="fa-user" class="fa"></md-icon>
           <input ng-disabled="loginSubmitting" ng-model="account.email" type="email">
           <ng-messages class="message-error" for="loginForm.email">
             <ng-message when="required">
@@ -23,8 +24,9 @@
             </ng-message>
           </ng-messages>
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container flex class="md-icon-float">
           <label>Password</label>
+          <md-icon md-font-icon="fa-lock" class="fa"></md-icon>
           <input ng-disabled="loginSubmitting" ng-model="account.password" type="password">
           <ng-messages class="message-error" for="loginForm.password">
             <ng-message when="required">
