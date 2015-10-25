@@ -4,7 +4,7 @@
   "description": "The web front-end for kitchen.support",
   "main": "index.html",
   "scripts": {
-    "pretest": "npm install protractor jasmine -g && node node_modules/protractor/bin/webdriver-manager update",
+    "pretest": "node node_modules/protractor/bin/webdriver-manager update",
     "test": "gulp test"
   },
   "repository": {
