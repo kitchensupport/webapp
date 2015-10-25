@@ -4,8 +4,6 @@ general:
             - gh-pages
 dependencies:
   pre:
-      - sudo apt-get install build-essential
-      - sudo apt-get install gcc
       - sudo apt-get install g++
       - npm install protractor jasmine -g
 machine:
