@@ -4,7 +4,7 @@ general:
             - gh-pages
 dependencies:
   pre:
-      - node install protractor jasmine -g
+      - npm install protractor jasmine -g
 machine:
     node:
         version: 4.2.1
