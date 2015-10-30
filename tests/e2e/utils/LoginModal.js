@@ -18,7 +18,6 @@ const LoginModal = {
 
     logout: () => {
         element(by.id('logout')).click();
-        return !LoginModal.isLoggedIn();
     },
 
     setEmail: (email) => {

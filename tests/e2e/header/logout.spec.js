@@ -5,6 +5,7 @@ describe('homepage logout', () => {
         browser.get('http://localhost:8001');
         LoginModal.open();
         LoginModal.login('t@t.com', 'test');
-        expect(LoginModal.logout()).toEqual(true);
+        LoginModal.logout();
+        expect(LoginModal.isLoggedIn()).toEqual(false);
     });
 });
