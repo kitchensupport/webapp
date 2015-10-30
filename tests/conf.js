@@ -1,6 +1,12 @@
 exports.config = {
-    seleniumServerJar: '../node_modules/protractor/selenium/selenium-server-standalone-2.47.1.jar',
-    chromeDriver: '../node_modules/protractor/selenium/chromedriver',
     framework: 'jasmine2',
-    specs: ['main.js']
+    suites: {
+        home: 'e2e/home/**/*.spec.js',
+        header: 'e2e/header/**/*.spec.js'
+    },
+    jasmineNodeOpts: {
+        isVerbose: false,
+        showColors: true,
+        includeStackTrace: true
+    }
 };

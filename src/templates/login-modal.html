@@ -30,7 +30,7 @@
           <input ng-disabled="loginSubmitting" ng-model="account.password" type="password">
           <ng-messages class="message-error" for="loginForm.password">
             <ng-message when="required">
-              A password is required.asdasd
+              A password is required.
             </ng-message>
           </ng-messages>
         </md-input-container>
@@ -39,9 +39,9 @@
         </md-checkbox>
       </md-content>
       <div class="modalButtons" layout="column"  layout-align="center center">
-        <md-button ng-disabled="loginSubmitting" class="md-raised md-primary" type="submit">Login</md-button>
-        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register">Need an account?</md-button>
-        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password">Forgot your password?</md-button>
+        <md-button ng-disabled="loginSubmitting" class="md-raised md-primary" type="submit" id="modal-loginButton">Login</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register" id="modal-register">Need an account?</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password" id="modal-forgotPassword">Forgot your password?</md-button>
       </div>
     </form>
   </div>

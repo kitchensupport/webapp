@@ -15,6 +15,8 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const protractor = require('gulp-protractor').protractor;
 const forever = require('forever-monitor');
+const glob = require('glob');
+const es = require('event-stream');
 
 gulp.task('lint', ['lint:js', 'lint:sass']);
 
@@ -38,9 +40,9 @@ gulp.task('test', ['build', 'build:tests'], () => {
     const child = new (forever.Monitor)('index.js');
 
     child.start();
-    return gulp.src(['./tests/**/.js'])
+    return gulp.src(['./dist/tests/**/.js'])
         .pipe(protractor({
-            configFile: './tests/conf.js',
+            configFile: './dist/tests/conf.js',
             args: ['--baseUrl', 'http://127.0.0.1:8001']
         }))
         .on('error', (error) => {
@@ -64,12 +66,22 @@ gulp.task('build:js', ['lint:js'], () => {
         .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('build:tests', ['lint:tests', 'build:tests-conf'], () => {
-    return browserify('tests/main.js', {debug: true})
-        .bundle()
-        .pipe(source('main.js'))
-        .pipe(buffer())
-        .pipe(gulp.dest('dist/tests/'));
+gulp.task('build:tests', ['lint:tests', 'build:tests-conf'], (done) => {
+    glob('./tests/e2e/**/*.spec.js', (err, files) => {
+        if (err) {
+            done(err);
+            return;
+        }
+
+        const tasks = files.map((entry) => {
+            return browserify({ entries: [entry]})
+                .bundle()
+                .pipe(source(entry))
+                .pipe(gulp.dest('./dist/'));
+        });
+
+        es.merge(tasks).on('end', done);
+    });
 });
 
 gulp.task('build:tests-conf', () => {
