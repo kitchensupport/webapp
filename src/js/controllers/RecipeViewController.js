@@ -7,21 +7,9 @@ function RecipeViewController($scope, $state, $stateParams, RecipeService) {
         RecipeService.getRecipe(recipeId)
             .then((response) => {
                 $scope.recipe.status = response.status;
+                $scope.recipe.data = response.data.data;
 
-                if (response && response.status === 200) {
-                    $scope.recipe.data = response.data.data;
-
-                    if ($scope.recipe.data.totalTimeInSeconds && $scope.recipe.data.totalTimeInSeconds > 1) {
-                        $scope.recipe.data.totalTimeString = `${$scope.recipe.data.totalTimeInSeconds / 60} minutes`;
-                    }
-                    $scope.recipe.data.ratingArray = [];
-                    for (let i = 0;i < $scope.recipe.data.rating;i++) {
-                        $scope.recipe.data.ratingArray.push(true);
-                    }
-                    for (let i = $scope.recipe.data.rating;i < 5;i++) {
-                        $scope.recipe.data.ratingArray.push(false);
-                    }
-                }
+                return response;
             })
             .catch(() => {
                 $scope.recipe.status = 500;
