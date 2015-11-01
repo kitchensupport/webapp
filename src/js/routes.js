@@ -10,6 +10,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   templateUrl: 'templates/home.html',
                   controller: 'HomeController'
               })
+              .state('account', {
+                  url: '/account',
+                  templateUrl: 'templates/account.html',
+                  controller: 'AccountController'
+              })
               .state('register', {
                   url: '/register',
                   templateUrl: 'templates/register.html',

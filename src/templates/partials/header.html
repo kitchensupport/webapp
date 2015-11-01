@@ -1,15 +1,40 @@
-<md-toolbar>
+<md-toolbar ng-controller="LoginController">
   <div class="md-toolbar-tools">
     <a ui-sref="home">Kitchen Support</a>
     <md-button ui-sref="recipes">
       Recipes
     </md-button>
     <span flex></span>
-    <md-button id="login" ng-if="!auth.user" ng-click="openLoginModal($event)" ng-controller="LoginController">
-      Login
-    </md-button>
-    <md-button id="logout" ng-if="auth.user" ng-click="auth.logout()">
-      Logout
-    </md-button>
+    <span ng-if="!auth.user">
+      <md-button id="login" ng-click="openLoginModal($event)">
+        Login
+      </md-button>
+    </span>
+    <span ng-if="auth.user">
+      <md-menu>
+        <md-button id="account-menu" ng-click="openMenu($mdOpenMenu, $event)" ng-bind="auth.user.email" aria-label="Menu">
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ui-sref="account">
+              <md-icon md-font-icon="fa-user" class="fa" md-menu-align-target></md-icon>
+              My Account
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="ctrl.redial($event)">
+              <md-icon md-font-icon="fa-cutlery" class="fa" md-menu-align-target></md-icon>
+              My Recipes
+            </md-button>
+          </md-menu-item>
+          <md-menu-divider></md-menu-divider>
+          <md-menu-item>
+            <md-button id="logout" ng-click="auth.logout()">
+              Logout
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </span>
   </div>
 </md-toolbar>

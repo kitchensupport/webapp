@@ -1,3 +1,7 @@
-function HeaderController() {}
+function HeaderController($scope) {
+    $scope.openMenu = ($mdOpenMenu, ev) => {
+        $mdOpenMenu(ev);
+    };
+}
 
-export default [HeaderController];
+export default ['$scope', HeaderController];
