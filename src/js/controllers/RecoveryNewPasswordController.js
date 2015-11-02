@@ -18,13 +18,13 @@ function RecoveryNewPasswordController($scope, $state, $stateParams, AuthService
         }
 
         AuthService.forgotPasswordConfirm($stateParams.token, $scope.account.password)
-            .then((response) => {
+            .then(() => {
                 $scope.recoverSubmitting = false;
 
                 // Redirect to homepage after recovering.
                 $state.go('home');
             })
-            .catch((err) => {
+            .catch(() => {
                 $scope.recoverForm.general.issue = true;
                 $scope.recoverSubmitting = false;
             });
