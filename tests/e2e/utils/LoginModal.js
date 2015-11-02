@@ -17,6 +17,7 @@ const LoginModal = {
     },
 
     logout: () => {
+        element(by.id('account-menu')).click();
         element(by.id('logout')).click();
     },
 
@@ -39,7 +40,7 @@ const LoginModal = {
     },
 
     isLoggedIn: () => {
-        return element(by.id('logout')).isPresent();
+        return element(by.id('account-menu')).isPresent();
     }
 };
 

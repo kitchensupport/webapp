@@ -14,6 +14,7 @@
   <body ng-controller="MainController">
       <div header></div>
       <div id="main" class="container" ui-view></div>
+      <div id="unauthorized" ng-if="auth.required && !auth.user" unauthorized></div>
       <div footer></div>
 
       <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>

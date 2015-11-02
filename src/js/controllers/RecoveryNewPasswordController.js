@@ -18,15 +18,13 @@ function RecoveryNewPasswordController($scope, $state, $stateParams, AuthService
         }
 
         AuthService.forgotPasswordConfirm($stateParams.token, $scope.account.password)
-            .then((response) => {
-                console.log(`Success Resetting Pasword: '${JSON.stringify(response)}'.`);
+            .then(() => {
                 $scope.recoverSubmitting = false;
 
                 // Redirect to homepage after recovering.
                 $state.go('home');
             })
-            .catch((err) => {
-                console.error('Error Resetting Password', JSON.stringify(err));
+            .catch(() => {
                 $scope.recoverForm.general.issue = true;
                 $scope.recoverSubmitting = false;
             });
