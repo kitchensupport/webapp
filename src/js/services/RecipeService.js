@@ -3,9 +3,8 @@
 function parseRecipeArray(promise) {
     return promise.then((response) => {
         if (response && response.status === 200) {
-            response.data.data.matches.forEach((part, recipe, recipes) => {
-                recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].id}'})`;
-                recipes[recipe].url = (recipes[recipe].url);
+            response.data.recipes.forEach((part, recipe, recipes) => {
+                recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].yummly_id}'})`;
 
                 if (recipes[recipe].totalTimeInSeconds && recipes[recipe].totalTimeInSeconds > 1) {
                     recipes[recipe].totalTimeString = `${recipes[recipe].totalTimeInSeconds / 60} minutes`;
@@ -32,18 +31,18 @@ function parseRecipeArray(promise) {
 function parseRecipe(promise) {
     return promise.then((response) => {
         console.log(response);
-        if (response.data.data.totalTimeInSeconds && response.data.data.totalTimeInSeconds > 1) {
-            response.data.data.totalTimeString = `${response.data.data.totalTimeInSeconds / 60} minutes`;
+        if (response.data.totalTimeInSeconds && response.data.totalTimeInSeconds > 1) {
+            response.data.totalTimeString = `${response.data.totalTimeInSeconds / 60} minutes`;
         }
-        response.data.data.ratingArray = [];
-        for (let i = 0;i < response.data.data.rating;i++) {
-            response.data.data.ratingArray.push(true);
+        response.data.ratingArray = [];
+        for (let i = 0;i < response.data.rating;i++) {
+            response.data.ratingArray.push(true);
         }
-        for (let i = response.data.data.rating;i < 5;i++) {
-            response.data.data.ratingArray.push(false);
+        for (let i = response.data.rating;i < 5;i++) {
+            response.data.ratingArray.push(false);
         }
 
-        response.data.data.imageUrl = `${response.data.data.images[0].hostedLargeUrl.split('=')[0]}=s750`;
+        response.data.imageUrl = `${response.data.images[0].hostedLargeUrl.split('=')[0]}=s750`;
 
         return response;
     });
@@ -51,20 +50,29 @@ function parseRecipe(promise) {
 
 function RecipeService($http, $q, AuthService) {
     return {
-        getFeaturedRecipes: () => {
-            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/featured?api_token=${AuthService.getApiToken()}`));
+        getRecipeStream: () => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/stream`));
         },
         getSearch: (searchTerm) => {
-            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}`));
+            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?forceNew=true`));
         },
         getRecipe: (recipeId) => {
-            return parseRecipe($http.get(`http://api.kitchen.support/recipes/recipe/${recipeId}`));
+            return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}`));
         },
         favoriteRecipe: (recipeId) => {
-            return $http.post(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), id: recipeId});
+            return $http.post(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         unFavoriteRecipe: (recipeId) => {
-            return $http.post(`http://api.kitchen.support/recipes/unfavorite`, {api_token: AuthService.getApiToken(), id: recipeId});
+            return $http.delete(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+        },
+        likeRecipe: (recipeId) => {
+            return $http.post(`http://api.kitchen.support/recipes/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+        },
+        unLikeRecipe: (recipeId) => {
+            return $http.delete(`http://api.kitchen.support/recipes/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+        },
+        getLiked: (recipeId) => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/likes?recipe_id=${recipeId}?api_token=${AuthService.getApiToken()}`));
         }
     };
 }

@@ -2,24 +2,14 @@ function RecipeController($scope, RecipeService) {
     $scope.featuredRecipes = {status: -1, data: {}};
     $scope.searchedRecipes = {};
 
-    $scope.getFeaturedRecipes = () => {
-        RecipeService.getFeaturedRecipes()
-            .then((response) => {
-                $scope.featuredRecipes.status = response.status;
-                $scope.featuredRecipes.data = response.data.data.matches;
-            }, () => {
-                $scope.featuredRecipes.status = 500;
-                return false;
-            });
-    };
-
     $scope.getSearchRecipes = (searchTerm) => {
         $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
 
         RecipeService.getSearch(searchTerm)
             .then((response) => {
+                console.log(response);
                 $scope.searchedRecipes[searchTerm].status = response.status;
-                $scope.searchedRecipes[searchTerm].data = response.data.data.matches;
+                $scope.searchedRecipes[searchTerm].data = response.data.recipes;
             }, () => {
                 $scope.searchedRecipes[searchTerm].status = 500;
                 return false;

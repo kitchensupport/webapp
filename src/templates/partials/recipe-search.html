@@ -1,0 +1,13 @@
+term: {{term}}
+<md-list ng-show="searchedRecipes[term].status === 200" layout="row" layout-margin layout-wrap data-ng-init="getSearchRecipes(term)">
+   <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes[term].data">
+        <p>test</p
+        <recipe recipe-data="{{recipe}}"></recipe>
+   </md-list-item>
+ </md-list>
+ <div ng-show="searchedRecipes[term].status === -1" layout="row" layout-sm="column" layout-align="center center">
+     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+ </div>
+ <div ng-show="searchedRecipes[term].status !== -1 && searchedRecipes[term].status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+     <p class="message-error">Error loading content.</p>
+ </div>

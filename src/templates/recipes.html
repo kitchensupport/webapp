@@ -1,71 +1,12 @@
 <h1>Recipes</h1>
 
 <div ng-if="auth.user" class="animate-if">
-  <section class="recipes">
-    <h3>Recommended For You</h3>
-     <md-list ng-show="featuredRecipes.status === 200" layout="row" layout-margin layout-wrap data-ng-init="getFeaturedRecipes()">
-        <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in featuredRecipes.data">
-          <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
-            <div class="recipeImage" ng-style="{'background-image':'url({{recipe.imageUrl}})'}">
-                <div ng-if="recipe.favorited">
-                  <p class="recipeTitle"><i class="fa fa-heart"></i> <span  ng-bind="recipe.recipeName"></span></p>
-                </div>
-                <div ng-if="!recipe.favorited">
-                  <p class="recipeTitle"><span  ng-bind="recipe.recipeName"></span></p>
-                </div>
-            </div>
-            <div class="recipeDescription">
-              <span class="rating">
-                <span ng-repeat="star in recipe.ratingArray track by $index">
-                  <i ng-if="star" class="fa fa-star"></i>
-                  <i ng-if="!star" class="fa fa-star-o"></i>
-                </span>
-              </span>
-              <span ng-if="recipe.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.totalTimeString}}</span>
-            </div>
-          </div>
-        </md-list-item>
-      </md-list>
-      <div ng-show="featuredRecipes.status === -1" layout="row" layout-sm="column" layout-align="center center">
-          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-      <div ng-show="featuredRecipes.status !== -1 && featuredRecipes.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
-          <p class="message-error">Error loading content.</p>
-      </div>
-  </section>
+  You're logged in!
 </div>
 
 <div>
     <section class="recipes">
       <h3>Check Out These Burritos</h3>
-      <md-list ng-show="searchedRecipes['burrito'].status === 200" layout="row" layout-margin layout-wrap data-ng-init="getSearchRecipes('burrito')">
-         <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes['burrito'].data">
-             <div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
-               <div class="recipeImage" ng-style="{'background-image':'url({{recipe.imageUrl}})'}">
-                 <div ng-if="recipe.favorited">
-                   <p class="recipeTitle"><i class="fa fa-heart"></i> <span  ng-bind="recipe.recipeName"></span></p>
-                 </div>
-                 <div ng-if="!recipe.favorited">
-                   <p class="recipeTitle"><span  ng-bind="recipe.recipeName"></span></p>
-                 </div>
-               </div>
-               <div class="recipeDescription">
-                 <span class="rating">
-                   <span ng-repeat="star in recipe.ratingArray track by $index">
-                     <i ng-if="star" class="fa fa-star"></i>
-                     <i ng-if="!star" class="fa fa-star-o"></i>
-                   </span>
-                 </span>
-                 <span ng-if="recipe.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.totalTimeString}}</span>
-               </div>
-             </div>
-           </md-list-item>
-       </md-list>
-       <div ng-show="searchedRecipes['burrito'].status === -1" layout="row" layout-sm="column" layout-align="center center">
-           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-       </div>
-       <div ng-show="searchedRecipes['burrito'].status !== -1 && searchedRecipes['burrito'].status !== 200 " layout="row" layout-sm="column" layout-align="center center">
-           <p class="message-error">Error loading content.</p>
-       </div>
+      <recipeSearch term="burritos"></recipeSearch>
     </section>
 </div>

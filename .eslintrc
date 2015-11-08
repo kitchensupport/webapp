@@ -1,5 +1,6 @@
 {
     "rules": {
+        "require-jsdoc": 0,
         "callback-return": [2, ["callback", "cb", "next", "done"]],
         "comma-dangle": [2, "never"],
         "consistent-return": 2,
