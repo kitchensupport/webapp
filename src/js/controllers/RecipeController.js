@@ -30,3 +30,4 @@ function RecipeController($scope, RecipeService) {
 }
 
 export default ['$scope', 'RecipeService', RecipeController];
+
