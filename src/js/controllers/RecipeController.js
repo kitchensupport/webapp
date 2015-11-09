@@ -7,7 +7,6 @@ function RecipeController($scope, RecipeService) {
 
         RecipeService.getSearch(searchTerm)
             .then((response) => {
-                console.log(response);
                 $scope.searchedRecipes[searchTerm].status = response.status;
                 $scope.searchedRecipes[searchTerm].data = response.data.recipes;
             }, () => {

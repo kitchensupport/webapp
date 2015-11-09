@@ -7,7 +7,7 @@ function RecipeViewController($scope, $state, $stateParams, RecipeService) {
         RecipeService.getRecipe(recipeId)
             .then((response) => {
                 $scope.recipe.status = response.status;
-                $scope.recipe.data = response.data.data;
+                $scope.recipe.data = response.data;
 
                 return response;
             })

@@ -1,16 +1,26 @@
-function RecipeDirective() {
+export function search() {
     return {
-        search: {
-            templateUrl: 'templates/partials/recipe-search.html',
-            scope: true,
-            controller: 'RecipeController'
+        templateUrl: 'templates/partials/recipe/recipe-search.html',
+        scope: {
+            searchTerm: '@'
         },
-        view: {
-            templateUrl: 'templates/partials/recipe.html',
-            scope: true,
-            controller: 'RecipeController'
+        controller: 'RecipeController'
+    };
+}
+
+export function preview() {
+    return {
+        templateUrl: 'templates/partials/recipe/recipe-preview.html',
+        scope: true,
+        link: (scope, element, attributes) => {
+            scope.recipe = JSON.parse(attributes.recipeData);
         }
     };
 }
 
-export default [RecipeDirective];
+export function view() {
+    return {
+        templateUrl: 'templates/partials/recipe/recipe-view.html',
+        controller: 'RecipeViewController'
+    };
+}

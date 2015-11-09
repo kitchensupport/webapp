@@ -30,7 +30,6 @@ function parseRecipeArray(promise) {
 // Parse an individual recipe.
 function parseRecipe(promise) {
     return promise.then((response) => {
-        console.log(response);
         if (response.data.totalTimeInSeconds && response.data.totalTimeInSeconds > 1) {
             response.data.totalTimeString = `${response.data.totalTimeInSeconds / 60} minutes`;
         }
@@ -42,7 +41,7 @@ function parseRecipe(promise) {
             response.data.ratingArray.push(false);
         }
 
-        response.data.imageUrl = `${response.data.images[0].hostedLargeUrl.split('=')[0]}=s750`;
+        response.data.imageUrl = `${response.data.imageUrlsBySize[Object.keys(response.data.imageUrlsBySize)[0]].split('=')[0]}=s750`;
 
         return response;
     });
