@@ -1,8 +1,27 @@
-function MyRecipesController($scope) {
+function MyRecipesController($rootScope, $scope, RecipeService) {
 
     // Require user authentication.
-    $scope.auth = $scope.auth || {};
-    $scope.auth.required = true;
+    $rootScope.auth = $rootScope.auth || {};
+    $rootScope.auth.required = true;
+
+    $scope.getLikedRecipes = () => {
+        if ($scope.likedRecipes && $scope.likedRecipes.status === 200) {
+            return true;
+        }
+
+        $scope.likedRecipes = {status: -1, data: {}};
+
+        RecipeService.getLiked()
+            .then((response) => {
+                $scope.likedRecipes.status = response.status;
+                $scope.likedRecipes.data = response.data.recipes;
+                console.log(response);
+                return true;
+            }, () => {
+                $scope.likedRecipes.status = 500;
+                return false;
+            });
+    };
 }
 
-export default ['$scope', MyRecipesController];
+export default ['$rootScope', '$scope', 'RecipeService', MyRecipesController];

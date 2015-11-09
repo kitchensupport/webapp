@@ -24,3 +24,11 @@ export function view() {
         controller: 'RecipeViewController'
     };
 }
+
+export function liked() {
+    return {
+        templateUrl: 'templates/partials/recipe/recipe-liked.html',
+        scope: true,
+        controller: 'MyRecipesController'
+    };
+}

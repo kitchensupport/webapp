@@ -13,7 +13,7 @@
   </head>
   <body ng-controller="MainController">
       <header></header>
-      <div id="main" class="container" ui-view></div>
+      <div id="main" class="container" ui-view ng-if="(auth.required && auth.user) || !auth.required"></div>
       <div id="unauthorized" ng-if="auth.required && !auth.user" unauthorized></div>
       <footer></footer>
 

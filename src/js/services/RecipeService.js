@@ -3,24 +3,26 @@
 function parseRecipeArray(promise) {
     return promise.then((response) => {
         if (response && response.status === 200) {
-            response.data.recipes.forEach((part, recipe, recipes) => {
-                recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].yummly_id}'})`;
+            if (response.data.recipes && response.data.recipes.length > 0) {
+                response.data.recipes.forEach((part, recipe, recipes) => {
+                    recipes[recipe].url = `recipeView({'recipeId': '${recipes[recipe].yummly_id}'})`;
 
-                if (recipes[recipe].totalTimeInSeconds && recipes[recipe].totalTimeInSeconds > 1) {
-                    recipes[recipe].totalTimeString = `${recipes[recipe].totalTimeInSeconds / 60} minutes`;
-                }
+                    if (recipes[recipe].totalTimeInSeconds && recipes[recipe].totalTimeInSeconds > 1) {
+                        recipes[recipe].totalTimeString = `${recipes[recipe].totalTimeInSeconds / 60} minutes`;
+                    }
 
-                recipes[recipe].ratingArray = [];
+                    recipes[recipe].ratingArray = [];
 
-                // TODO: 'no recipe found' image.
-                recipes[recipe].imageUrl = `${recipes[recipe].smallImageUrls[0].split('=')[0]}=s360`;
-                for (let i = 0;i < recipes[recipe].rating;i++) {
-                    recipes[recipe].ratingArray.push(true);
-                }
-                for (let i = recipes[recipe].rating;i < 5;i++) {
-                    recipes[recipe].ratingArray.push(false);
-                }
-            });
+                    // TODO: 'no recipe found' image.
+                    recipes[recipe].imageUrl = `${recipes[recipe].smallImageUrls[0].split('=')[0]}=s360`;
+                    for (let i = 0;i < recipes[recipe].rating;i++) {
+                        recipes[recipe].ratingArray.push(true);
+                    }
+                    for (let i = recipes[recipe].rating;i < 5;i++) {
+                        recipes[recipe].ratingArray.push(false);
+                    }
+                });
+            }
         }
 
         return response;
@@ -65,13 +67,13 @@ function RecipeService($http, $q, AuthService) {
             return $http.delete(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         likeRecipe: (recipeId) => {
-            return $http.post(`http://api.kitchen.support/recipes/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.post(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         unLikeRecipe: (recipeId) => {
-            return $http.delete(`http://api.kitchen.support/recipes/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.delete(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
-        getLiked: (recipeId) => {
-            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/likes?recipe_id=${recipeId}?api_token=${AuthService.getApiToken()}`));
+        getLiked: () => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/likes?api_token=${AuthService.getApiToken()}`));
         }
     };
 }

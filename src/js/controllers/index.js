@@ -11,6 +11,7 @@ import RecoveryController from './RecoveryController';
 import RecoveryNewPasswordController from './RecoveryNewPasswordController';
 import RecipeController from './RecipeController';
 import RecipeViewController from './RecipeViewController';
+import RecipeStreamController from './RecipeStreamController';
 
 app.controller('MainController', MainController);
 app.controller('HeaderController', HeaderController);
@@ -24,3 +25,4 @@ app.controller('RecoveryController', RecoveryController);
 app.controller('RecoveryNewPasswordController', RecoveryNewPasswordController);
 app.controller('RecipeController', RecipeController);
 app.controller('RecipeViewController', RecipeViewController);
+app.controller('RecipeStreamController', RecipeStreamController);
