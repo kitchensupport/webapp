@@ -98,3 +98,18 @@ recipepreview {
 .sidebar {
   padding: 15px;
 }
+
+#recipeStream {
+  md-card {
+    text-align: center;
+  }
+
+  #stream-like {
+    background-color: lighten(green, 25%);
+  }
+
+  #stream-dislike {
+    background-color: lighten(red, 20%);
+  }
+
+}

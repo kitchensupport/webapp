@@ -1,1 +1,28 @@
 <h1>Recipe Stream</h1>
+<div data-ng-init="getRecipeStream()" id="recipeStream">
+    <div ng-if="recipeStream.status === 200 && recipeStream.data.recipes.length > 0">
+        <md-card class="md-white" md-swipe-left="" md-swipe-right="" ng-repeat="recipe in recipeStream.data.recipes" ng-if="recipeStream.current == recipe.id" layout-align="center center">
+            <md-card-content>
+                <h2 ng-bind="recipe.recipeName"></h2>
+                <div>
+                    <img height="300" ng-src="{{recipe.imageUrl}}">
+                </div>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="center center">
+                <md-button aria-label="dislike" ng-click="dislikeRecipe(recipe.id)" id="stream-dislike" class="md-raised"><md-icon md-font-icon="fa-thumbs-down" class="fa"></md-icon></md-button>
+                <span flex="10"></span>
+                <md-button aria-label="like" ng-click="likeRecipe(recipe.id)"  id="stream-like" class="md-raised"><md-icon md-font-icon="fa-thumbs-up" class="fa"></md-icon></md-button>
+            </md-card-actions>
+        </md-card>
+        <div ng-show="recipeStream.currentIndex >= recipeStream.data.matches" layout="row" layout-sm="column" layout-align="center center">
+            <h3>Oh no! You have no more recipes to rate!</h3>
+        </div>
+    </div>
+
+    <div ng-show="recipeStream.status === -1" layout="row" layout-sm="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <div ng-show="recipeStream.status !== -1 && recipeStream.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+        <p class="message-error">Error loading recipe stream.</p>
+    </div>
+</div>

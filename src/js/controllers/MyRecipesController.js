@@ -13,9 +13,7 @@ function MyRecipesController($rootScope, $scope, RecipeService) {
 
         RecipeService.getLiked()
             .then((response) => {
-                $scope.likedRecipes.status = response.status;
-                $scope.likedRecipes.data = response.data.recipes;
-                console.log(response);
+                $scope.likedRecipes = response;
                 return true;
             }, () => {
                 $scope.likedRecipes.status = 500;

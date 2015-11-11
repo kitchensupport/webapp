@@ -1,6 +1,6 @@
 <md-list ng-show="likedRecipes.status === 200" layout="row" layout-margin layout-wrap data-ng-init="getLikedRecipes()">
    <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in likedRecipes.data.likes">
-        <recipePreview recipe-data="{{recipe}}"></recipePreview>
+        <RecipePreview recipe-data="{{recipe}}"></RecipePreview>
    </md-list-item>
  </md-list>
  <div ng-show="likedRecipes.status === -1" layout="row" layout-sm="column" layout-align="center center">

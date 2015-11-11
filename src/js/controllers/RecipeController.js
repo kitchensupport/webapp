@@ -10,8 +10,8 @@ function RecipeController($scope, RecipeService) {
 
         RecipeService.getSearch(searchTerm)
             .then((response) => {
-                $scope.searchedRecipes[searchTerm].status = response.status;
-                $scope.searchedRecipes[searchTerm].data = response.data.recipes;
+                console.log(response);
+                $scope.searchedRecipes[searchTerm] = response;
                 return true;
             }, () => {
                 $scope.searchedRecipes[searchTerm].status = 500;

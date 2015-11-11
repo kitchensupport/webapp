@@ -2,6 +2,9 @@
 // Parse an array of recipes.
 function parseRecipeArray(promise) {
     return promise.then((response) => {
+        console.log('parsing recipes');
+        console.log(response);
+        response.data.recipes = response.data.recipes || response.data.likes || {};
         if (response && response.status === 200) {
             if (response.data.recipes && response.data.recipes.length > 0) {
                 response.data.recipes.forEach((part, recipe, recipes) => {
@@ -44,7 +47,6 @@ function parseRecipe(promise) {
         }
 
         response.data.imageUrl = `${response.data.imageUrlsBySize[Object.keys(response.data.imageUrlsBySize)[0]].split('=')[0]}=s750`;
-
         return response;
     });
 }
@@ -74,6 +76,9 @@ function RecipeService($http, $q, AuthService) {
         },
         getLiked: () => {
             return parseRecipeArray($http.get(`http://api.kitchen.support/likes?api_token=${AuthService.getApiToken()}`));
+        },
+        getRecipeStream: () => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/stream?api_token=${AuthService.getApiToken()}`));
         }
     };
 }

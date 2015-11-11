@@ -1,6 +1,6 @@
 <md-list ng-show="searchedRecipes[searchTerm].status === 200" layout="row" layout-margin layout-wrap data-ng-init="getSearchRecipes(searchTerm)">
-   <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes[searchTerm].data">
-        <recipePreview recipe-data="{{recipe}}"></recipePreview>
+   <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes[searchTerm].data.recipes">
+        <RecipePreview recipe-data="{{recipe}}"></RecipePreview>
    </md-list-item>
  </md-list>
  <div ng-show="searchedRecipes[searchTerm].status === -1" layout="row" layout-sm="column" layout-align="center center">
