@@ -3,6 +3,10 @@ function MainController($rootScope, $cookies, AuthService) {
     $rootScope.auth = {};
     $rootScope.auth.logout = AuthService.logout;
 
+    $rootScope.$on('$stateChangeStart', () => {
+        $rootScope.auth.required = false;
+    });
+
     // Check to see if there's a token in storage.
     if (!AuthService.getCurrentUser() && $cookies.ksLoginToken !== undefined && $cookies.ksLoginToken !== 'undefined') {
         AuthService.login({api_token: $cookies.ksLoginToken});

@@ -16,21 +16,21 @@ function AuthService($http, $cookies, $mdDialog) {
                     email: args.email,
                     password: args.password
                 }).then((response) => {
-                    currentUser = response.data.user;
+                    currentUser = response.data;
 
                     // Store user info in cookies.
                     if (args.remember) {
-                        $cookies.ksLoginToken = response.data.user.api_token;
+                        $cookies.ksLoginToken = response.data.api_token;
                     }
                 });
             } else if (args.api_token && args.api_token.length > 0) {
-                return $http.get(`http://api.kitchen.support/account?token=${args.api_token}`)
+                return $http.get(`http://api.kitchen.support/account?api_token=${args.api_token}`)
                     .then((response) => {
-                        currentUser = response.data.user;
+                        currentUser = response.data;
 
                         // Store user info in cookies.
                         if (args.remember) {
-                            $cookies.ksLoginToken = response.data.user.api_token;
+                            $cookies.ksLoginToken = response.data.api_token;
                         }
                     });
             }
