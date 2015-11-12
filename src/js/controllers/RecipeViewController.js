@@ -17,15 +17,31 @@ function RecipeViewController($scope, $state, $stateParams, RecipeService) {
     };
 
     $scope.favoriteRecipe = () => {
-        $scope.recipe.data.favorited = true;
-
-        return RecipeService.favoriteRecipe($scope.recipe.data.id);
+        $scope.recipe.data.favoritedLoading = true;
+        RecipeService.favoriteRecipe($scope.recipe.data.id)
+            .then(() => {
+                $scope.recipe.data.favorited = true;
+            })
+            .catch((err) => {
+                console.log(`Error favoriting recipe: ${JSON.stringify(err)}`);
+            })
+            .finally(() => {
+                $scope.recipe.data.favoritedLoading = false;
+            });
     };
 
     $scope.unFavoriteRecipe = () => {
-        $scope.recipe.data.favorited = false;
-
-        return RecipeService.unFavoriteRecipe($scope.recipe.data.id);
+        $scope.recipe.data.favoritedLoading = true;
+        RecipeService.unFavoriteRecipe($scope.recipe.data.id)
+            .then(() => {
+                $scope.recipe.data.favorited = false;
+            })
+            .catch((err) => {
+                console.log(`Error un-favoriting recipe: ${JSON.stringify(err)}`);
+            })
+            .finally(() => {
+                $scope.recipe.data.favoritedLoading = false;
+            });
     };
 }
 

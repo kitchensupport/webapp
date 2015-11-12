@@ -3,8 +3,9 @@
     <h1>Recipe Information</h1>
     <div ng-show="recipe.status === 200">
         <h2>
-            <i ng-if="!recipe.data.favorited" ng-click="favoriteRecipe()" class="favorite fa fa-heart-o"></i>
-            <i ng-if="recipe.data.favorited" ng-click="unFavoriteRecipe()" class="favorited fa fa-heart"></i>
+            <i ng-show="!recipe.data.favorited && !recipe.data.favoritedLoading" ng-click="favoriteRecipe()" class="favorite fa fa-heart-o"></i>
+            <i ng-show="recipe.data.favorited && !recipe.data.favoritedLoading" ng-click="unFavoriteRecipe()" class="favorited fa fa-heart"></i>
+            <i ng-show="recipe.data.favoritedLoading" class="favorited fa fa-spinner"></i>
             <span ng-bind="recipe.data.recipeName"></span>
         </h2>
 

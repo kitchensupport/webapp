@@ -5,7 +5,7 @@ function RecipeStreamController($rootScope, $scope, RecipeService) {
     $rootScope.auth.required = true;
 
     $scope.$watch('recipeStream.currentIndex', () => {
-        if ($scope.recipeStream.currentIndex > -1 && $scope.recipeStream.currentIndex < $scope.recipeStream.data.matches) {
+        if ($scope.recipeStream.currentIndex > -1 && $scope.recipeStream.currentIndex < $scope.recipeStream.data.recipes.length) {
             $scope.recipeStream.current = $scope.recipeStream.data.recipes[$scope.recipeStream.currentIndex].id;
         } else {
             $scope.recipeStream.current = -1;
@@ -35,12 +35,10 @@ function RecipeStreamController($rootScope, $scope, RecipeService) {
 
     $scope.likeRecipe = (id) => {
         RecipeService.likeRecipe(id)
-            .then((response) => {
-                console.log(`Liked recipe ${id}`);
-                console.log(response);
+            .then(() => {
                 return true;
             }, (err) => {
-                console.log(`Liked recipe ${JSON.stringify(err)}`);
+                console.log(`Error liking recipe: ${JSON.stringify(err)}`);
                 return false;
             });
         $scope.recipeStream.currentIndex++;

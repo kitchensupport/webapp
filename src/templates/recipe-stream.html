@@ -14,7 +14,7 @@
                 <md-button aria-label="like" ng-click="likeRecipe(recipe.id)"  id="stream-like" class="md-raised"><md-icon md-font-icon="fa-thumbs-up" class="fa"></md-icon></md-button>
             </md-card-actions>
         </md-card>
-        <div ng-show="recipeStream.currentIndex >= recipeStream.data.matches" layout="row" layout-sm="column" layout-align="center center">
+        <div ng-show="recipeStream.currentIndex >= recipeStream.data.recipes.length" layout="row" layout-sm="column" layout-align="center center">
             <h3>Oh no! You have no more recipes to rate!</h3>
         </div>
     </div>
