@@ -63,10 +63,10 @@ function RecipeService($http, $q, AuthService) {
             return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}`));
         },
         favoriteRecipe: (recipeId) => {
-            return $http.post(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.post(`http://api.kitchen.support/recipes/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         unFavoriteRecipe: (recipeId) => {
-            return $http.delete(`http://api.kitchen.support/recipes/favorite`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.delete(`http://api.kitchen.support/recipes/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         likeRecipe: (recipeId) => {
             return $http.post(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
