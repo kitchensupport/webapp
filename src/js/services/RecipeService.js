@@ -2,8 +2,6 @@
 // Parse an array of recipes.
 function parseRecipeArray(promise) {
     return promise.then((response) => {
-        console.log('parsing recipes');
-        console.log(response);
         response.data.recipes = response.data.recipes || response.data.likes || {};
         if (response && response.status === 200) {
             if (response.data.recipes && response.data.recipes.length > 0) {
@@ -17,7 +15,9 @@ function parseRecipeArray(promise) {
                     recipes[recipe].ratingArray = [];
 
                     // TODO: 'no recipe found' image.
-                    recipes[recipe].imageUrl = `${recipes[recipe].smallImageUrls[0].split('=')[0]}=s360`;
+                    if (recipes[recipe].smallImageUrls && recipes[recipe].smallImageUrls.length > 0) {
+                        recipes[recipe].imageUrl = `${recipes[recipe].smallImageUrls[0].split('=')[0]}=s360`;
+                    }
                     for (let i = 0;i < recipes[recipe].rating;i++) {
                         recipes[recipe].ratingArray.push(true);
                     }
