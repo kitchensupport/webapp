@@ -27,6 +27,12 @@
               My Recipes
             </md-button>
           </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="ctrl.redial($event)" ui-sref="my-ingredients">
+              <md-icon md-font-icon="fa-shopping-cart" class="fa" md-menu-align-target></md-icon>
+              My Ingredients
+            </md-button>
+          </md-menu-item>
           <md-menu-divider></md-menu-divider>
           <md-menu-item>
             <md-button id="logout" ng-click="auth.logout()">

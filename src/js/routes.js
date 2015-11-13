@@ -20,6 +20,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   templateUrl: 'templates/my-recipes.html',
                   controller: 'MyRecipesController'
               })
+              .state('my-ingredients', {
+                  url: '/account/ingredients',
+                  templateUrl: 'templates/my-ingredients.html',
+                  controller: 'MyIngredientsController'
+              })
               .state('register', {
                   url: '/register',
                   templateUrl: 'templates/register.html',
