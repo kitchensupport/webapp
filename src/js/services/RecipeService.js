@@ -71,11 +71,23 @@ function RecipeService($http, $q, AuthService) {
         likeRecipe: (recipeId) => {
             return $http.post(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
+        completeRecipe: (recipeId) => {
+            return $http.post(`http://api.kitchen.support/completed`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+        },
         unLikeRecipe: (recipeId) => {
             return $http.delete(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
+        unCompleteRecipe: (recipeId) => {
+            return $http.delete(`http://api.kitchen.support/completed`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+        },
         getLiked: () => {
             return parseRecipeArray($http.get(`http://api.kitchen.support/likes?api_token=${AuthService.getApiToken()}`));
+        },
+        getFavorited: () => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/favorites?api_token=${AuthService.getApiToken()}`));
+        },
+        getCompleted: () => {
+            return parseRecipeArray($http.get(`http://api.kitchen.support/completed?api_token=${AuthService.getApiToken()}`));
         },
         getRecipeStream: () => {
             return parseRecipeArray($http.get(`http://api.kitchen.support/stream?api_token=${AuthService.getApiToken()}`));

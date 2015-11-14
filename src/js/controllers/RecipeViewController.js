@@ -30,6 +30,34 @@ function RecipeViewController($scope, $state, $stateParams, RecipeService) {
             });
     };
 
+    $scope.markCompleted = () => {
+        $scope.recipe.data.completedLoading = true;
+        RecipeService.completeRecipe($scope.recipe.data.id)
+            .then(() => {
+                $scope.recipe.data.completed = true;
+            })
+            .catch((err) => {
+                console.log(`Error completing recipe: ${JSON.stringify(err)}`);
+            })
+            .finally(() => {
+                $scope.recipe.data.completedLoading = false;
+            });
+    };
+
+    $scope.markUnCompleted = () => {
+        $scope.recipe.data.completedLoading = true;
+        RecipeService.unCompleteRecipe($scope.recipe.data.id)
+            .then(() => {
+                $scope.recipe.data.completed = false;
+            })
+            .catch((err) => {
+                console.log(`Error un-completed recipe: ${JSON.stringify(err)}`);
+            })
+            .finally(() => {
+                $scope.recipe.data.completedLoading = false;
+            });
+    };
+
     $scope.unFavoriteRecipe = () => {
         $scope.recipe.data.favoritedLoading = true;
         RecipeService.unFavoriteRecipe($scope.recipe.data.id)

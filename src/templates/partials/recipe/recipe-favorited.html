@@ -1,0 +1,11 @@
+<md-list ng-show="favoritedRecipes.status === 200" layout="row" layout-margin layout-wrap data-ng-init="getFavoritedRecipes()">
+    <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in favoritedRecipes.data.recipes">
+        <RecipePreview recipe-data="{{recipe}}"></RecipePreview>
+    </md-list-item>
+</md-list>
+<div ng-show="favoritedRecipes.status === -1" layout="row" layout-sm="column" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-show="favoritedRecipes.status !== -1 && favoritedRecipes.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+    <p class="message-error">Error loading favorited recipes.</p>
+</div>
