@@ -11,47 +11,47 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   controller: 'HomeController'
               })
               .state('account', {
-                  url: '/account',
+                  url: '/account/',
                   templateUrl: 'templates/account.html',
                   controller: 'AccountController'
               })
               .state('my-recipes', {
-                  url: '/account/recipes',
+                  url: '/account/recipes/',
                   templateUrl: 'templates/my-recipes.html',
                   controller: 'MyRecipesController'
               })
               .state('my-ingredients', {
-                  url: '/account/ingredients',
+                  url: '/account/ingredients/',
                   templateUrl: 'templates/my-ingredients.html',
                   controller: 'MyIngredientsController'
               })
               .state('register', {
-                  url: '/register',
+                  url: '/register/',
                   templateUrl: 'templates/register.html',
                   controller: 'RegistrationController'
               })
               .state('forgot-password', {
-                  url: '/forgot-password',
+                  url: '/forgot-password/',
                   templateUrl: 'templates/forgot-password.html',
                   controller: 'RecoveryController'
               })
               .state('forgot-password-token', {
-                  url: '/forgot-password/:token',
+                  url: '/forgot-password/:token/',
                   templateUrl: 'templates/forgot-password-token.html',
                   controller: 'RecoveryNewPasswordController'
               })
               .state('recipes', {
-                  url: '/recipes',
+                  url: '/recipes/',
                   templateUrl: 'templates/recipes.html',
                   controller: 'RecipeController'
               })
               .state('recipeView', {
-                  url: '/recipes/recipe/:recipeId',
+                  url: '/recipes/recipe/:recipeId/',
                   templateUrl: 'templates/recipe.html',
                   controller: 'RecipeViewController'
               })
               .state('recipeStream', {
-                  url: '/recipes/recipeStream',
+                  url: '/recipes/recipeStream/',
                   templateUrl: 'templates/recipe-stream.html',
                   controller: 'RecipeStreamController'
               });
