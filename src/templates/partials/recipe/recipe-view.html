@@ -21,6 +21,10 @@
         </br>
         <span ng-if="recipe.data.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.data.totalTimeString}}</span>
 
+        <md-button ng-click="markCompleted(recipe.data.id)"  ng-show="!recipe.data.completed && !recipe.data.completedLoading" ng-click="completeRecipe()">Complete Recipe</md-button >
+        <md-button ng-click="markUnCompleted(recipe.data.id)"  ng-show="recipe.data.completed && !recipe.data.completedLoading" ng-click="unCompleteRecipe()">UnComplete Recipe</md-button >
+        <md-button  ng-show="recipe.data.completedLoading" class="favorited fa fa-spinner">LOADING</md-button >
+
         <h3>Ingredients</h2>
             <div ng-if="recipe.data.ingredients.length">
                 <md-list>

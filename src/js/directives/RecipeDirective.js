@@ -32,3 +32,19 @@ export function liked() {
         controller: 'MyRecipesController'
     };
 }
+
+export function completed() {
+    return {
+        templateUrl: 'templates/partials/recipe/recipe-completed.html',
+        scope: true,
+        controller: 'MyRecipesController'
+    };
+}
+
+export function favorited() {
+    return {
+        templateUrl: 'templates/partials/recipe/recipe-favorited.html',
+        scope: true,
+        controller: 'MyRecipesController'
+    };
+}
