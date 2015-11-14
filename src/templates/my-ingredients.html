@@ -1,0 +1,39 @@
+<h1>Your Ingredients</h1>
+<div layout="column">
+    <div>
+        <h2>In Your Pantry</h2>
+        <md-list ng-if="pantry.status === 200 && pantry.data.matches > 0">
+            <md-list-item ng-repeat="pantryItem in pantry.data.items">
+                <md-button aria-label="Remove Ingredient from Pantry" ng-click="removePantry(pantryItem.id)"><md-icon md-font-icon="fa-trash" class="fa"></md-icon></md-button>
+                <span>{{pantryItem.searchValue}}</span>
+            </md-list-item>
+        </md-list>
+        <p ng-show="pantry.data.matches === 0">You have no items in your pantry.</p>
+        <div ng-show="pantry.status === -1" layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div ng-show="pantry.status !== -1 && pantry.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+            <p class="message-error">Error loading pantry items.</p>
+        </div>
+    </div>
+    <div>
+        <h2>Available Ingredients</h2>
+        <p ng-if="ingredients.data.range">Displaying results {{ingredients.data.range}} out of {{ingredients.data.matches}}.</p>
+        <md-list ng-if="ingredients.status === 200">
+            <md-list-item ng-repeat="ingredient in ingredients.data.ingredients | limitTo: ingredients.data.params.limit || 30">
+                <md-button aria-label="Add Ingredient to Pantry" ng-click="addPantry(ingredient.id)"><md-icon md-font-icon="fa-plus" class="fa"></md-icon></md-button>
+                <span>{{ingredient.searchValue}}</span>
+            </md-list-item>
+            <div layout="row" layout-align="center center">
+                <md-button class="md-raised" ng-click="previousPageIngredients()"><</md-button>
+                <md-button class="md-raised" ng-click="nextPageIngredients()">></md-button>
+            </div>
+        </md-list>
+        <div ng-show="ingredients.status === -1" layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div ng-show="ingredients.status !== -1 && ingredients.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+            <p class="message-error">Error loading ingredients.</p>
+        </div>
+    </div>
+</div>

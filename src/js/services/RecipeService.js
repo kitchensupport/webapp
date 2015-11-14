@@ -82,4 +82,5 @@ function RecipeService($http, $q, AuthService) {
         }
     };
 }
+
 export default ['$http', '$q', 'AuthService', RecipeService];

@@ -1,7 +1,7 @@
 <h1>Recipe Stream</h1>
 <div data-ng-init="getRecipeStream()" id="recipeStream">
     <div ng-if="recipeStream.status === 200 && recipeStream.data.recipes.length > 0">
-        <md-card class="md-white" md-swipe-left="" md-swipe-right="" ng-repeat="recipe in recipeStream.data.recipes" ng-if="recipeStream.current == recipe.id" layout-align="center center">
+        <md-card class="md-white" md-swipe-left="" md-swipe-right="" ng-repeat="recipe in recipeStream.data.recipes" ng-show="recipeStream.current == recipe.id" layout-align="center center">
             <md-card-content>
                 <h2 ng-bind="recipe.recipeName"></h2>
                 <div>
