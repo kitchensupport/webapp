@@ -8,8 +8,8 @@ function MainController($rootScope, $cookies, AuthService) {
     });
 
     // Check to see if there's a token in storage.
-    if (!AuthService.getCurrentUser() && $cookies.ksLoginToken !== undefined && $cookies.ksLoginToken !== 'undefined') {
-        AuthService.login({api_token: $cookies.ksLoginToken});
+    if (!AuthService.getCurrentUser() && $cookies.get('ksLoginToken') !== undefined && $cookies.get('ksLoginToken') !== 'undefined') {
+        AuthService.login({api_token: $cookies.get('ksLoginToken')});
     }
 
     // Update the scope whenever user information changes.

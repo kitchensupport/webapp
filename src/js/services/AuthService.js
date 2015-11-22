@@ -20,8 +20,15 @@ function AuthService($http, $cookies, $mdDialog) {
 
                     // Store user info in cookies.
                     if (args.remember) {
-                        $cookies.ksLoginToken = response.data.api_token;
+                        $cookies.put('ksLoginToken', response.data.api_token);
+                    } else {
+                        const date = new Date();
+
+                        // Expire in 30 minutes if it's not set to remember.
+                        date.setMinutes(date.getMinutes() + 30);
+                        $cookies.put('ksLoginToken', response.data.api_token, {expires: date});
                     }
+
                 });
             } else if (args.api_token && args.api_token.length > 0) {
                 return $http.get(`http://api.kitchen.support/account?api_token=${args.api_token}`)
@@ -37,7 +44,7 @@ function AuthService($http, $cookies, $mdDialog) {
         },
         logout: () => {
             currentUser = undefined;
-            $cookies.ksLoginToken = undefined;
+            $cookies.remove('ksLoginToken');
         },
         forgotPassword: (email) => {
             return $http.post('http://api.kitchen.support/accounts/reset/request', {
