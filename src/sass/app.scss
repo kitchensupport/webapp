@@ -113,3 +113,12 @@ recipepreview {
   }
 
 }
+
+.searchbar {
+  margin: 10px 40px 20px;
+  padding: 20px;
+
+  md-input-container {
+    padding-bottom: 0;
+  }
+}

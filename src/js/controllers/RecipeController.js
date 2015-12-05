@@ -1,20 +1,61 @@
 function RecipeController($scope, RecipeService) {
-    $scope.searchedRecipes = {};
+    const recipesPerPage = 28;
 
-    $scope.getSearchRecipes = (searchTerm) => {
-        if ($scope.searchedRecipes[searchTerm] && $scope.searchedRecipes[searchTerm].status === 200) {
-            return true;
+    $scope.searchedRecipes = {status: -1};
+
+    function parsePagination(data, limit, offset) {
+        console.log(data);
+        console.log(`pagination: ${data} ${limit} ${offset}`);
+
+        const page = {
+            buttons: [],
+            pageCount: Math.ceil(data.matches / limit),
+            currPage: Math.ceil(offset / limit )
+        };
+
+        for (let i = 0;i < page.pageCount;i++) {
+            if (i === page.currPage) {
+                page.buttons[i] = 'disabled';
+            } else {
+                page.buttons[i] = 'enabled';
+            }
         }
 
-        $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
+        return page;
+    }
 
-        RecipeService.getSearch(searchTerm)
+    let searchNum = 0;
+
+    $scope.$watch('search.term', (term) => {
+        const id = ++searchNum;
+
+        setTimeout(() => {
+            if (id === searchNum) {
+                this.getRecipes(0, term);
+            }
+        }, 250);
+    });
+
+    this.getRecipes = (page = 0, searchTerm = '%20') => {
+        let term = searchTerm;
+
+        if (!term || term.length === 0) {
+            term = '%20';
+        }
+
+        console.log('seraching for a recipe');
+        const offset = page * recipesPerPage;
+
+        RecipeService.getSearch({searchTerm: term, offset})
             .then((response) => {
+                console.log(`offset:${offset}`);
+
                 console.log(response);
-                $scope.searchedRecipes[searchTerm] = response;
+                $scope.searchedRecipes = response;
+                $scope.searchedRecipes.pagination = parsePagination(response.data, recipesPerPage, offset);
                 return true;
             }, () => {
-                $scope.searchedRecipes[searchTerm].status = 500;
+                $scope.searchedRecipes.status = 500;
                 return false;
             });
     };

@@ -56,8 +56,10 @@ function RecipeService($http, $q, AuthService) {
         getRecipeStream: () => {
             return parseRecipeArray($http.get(`http://api.kitchen.support/stream`));
         },
-        getSearch: (searchTerm) => {
-            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?forceNew=true`));
+        getSearch: (params) => {
+            const {searchTerm, limit = 28, offset = 0} = params;
+
+            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?limit=${limit}&offset=${offset}`));
         },
         getRecipe: (recipeId) => {
             return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}`));
