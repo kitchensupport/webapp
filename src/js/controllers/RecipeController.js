@@ -6,9 +6,6 @@ function RecipeController($scope, RecipeService) {
     $scope.searchedRecipes = {status: -1};
 
     function parsePagination(data, limit, offset) {
-        console.log(data);
-        console.log(`pagination: ${data} ${limit} ${offset}`);
-
         const page = {
             buttons: [],
             pageCount: Math.ceil(data.matches / limit),
@@ -37,14 +34,10 @@ function RecipeController($scope, RecipeService) {
             term = '%20';
         }
 
-        console.log('seraching for a recipe');
         const offset = page * recipesPerPage;
 
         RecipeService.getSearch({searchTerm: term, offset})
             .then((response) => {
-                console.log(`offset:${offset}`);
-
-                console.log(response);
                 $scope.searchedRecipes = response;
                 $scope.searchedRecipes.pagination = parsePagination(response.data, recipesPerPage, offset);
                 return true;
