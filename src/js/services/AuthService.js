@@ -1,4 +1,4 @@
-function AuthService($http, $cookies, $mdDialog) {
+function AuthService($http, $localStorage, $sessionStorage, $mdDialog) {
     let currentUser;
     let modalIsOpen = false;
     let modal;
@@ -20,13 +20,9 @@ function AuthService($http, $cookies, $mdDialog) {
 
                     // Store user info in cookies.
                     if (args.remember) {
-                        $cookies.put('ksLoginToken', response.data.api_token);
+                        $localStorage.ksLoginToken = response.data.api_token;
                     } else {
-                        const date = new Date();
-
-                        // Expire in 30 minutes if it's not set to remember.
-                        date.setMinutes(date.getMinutes() + 30);
-                        $cookies.put('ksLoginToken', response.data.api_token, {expires: date});
+                        $sessionStorage.ksLoginToken = response.data.api_token;
                     }
 
                 });
@@ -37,14 +33,17 @@ function AuthService($http, $cookies, $mdDialog) {
 
                         // Store user info in cookies.
                         if (args.remember) {
-                            $cookies.ksLoginToken = response.data.api_token;
+                            $localStorage.ksLoginToken = response.data.api_token;
+                        } else {
+                            $sessionStorage.ksLoginToken = response.data.api_token;
                         }
                     });
             }
         },
         logout: () => {
             currentUser = undefined;
-            $cookies.remove('ksLoginToken');
+            delete $localStorage.ksLoginToken;
+            delete $sessionStorage.ksLoginToken;
         },
         forgotPassword: (email) => {
             return $http.post('http://api.kitchen.support/accounts/reset/request', {
@@ -96,4 +95,4 @@ function AuthService($http, $cookies, $mdDialog) {
     };
 }
 
-export default ['$http', '$cookies', '$mdDialog', AuthService];
+export default ['$http', '$localStorage', '$sessionStorage', '$mdDialog', AuthService];

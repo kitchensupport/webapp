@@ -1,4 +1,4 @@
-function MainController($rootScope, $cookies, AuthService) {
+function MainController($rootScope, $localStorage, $sessionStorage, AuthService) {
     $rootScope.modals = {};
     $rootScope.auth = {};
     $rootScope.auth.logout = AuthService.logout;
@@ -7,9 +7,13 @@ function MainController($rootScope, $cookies, AuthService) {
         $rootScope.auth.required = false;
     });
 
-    // Check to see if there's a token in storage.
-    if (!AuthService.getCurrentUser() && $cookies.get('ksLoginToken') !== undefined && $cookies.get('ksLoginToken') !== 'undefined') {
-        AuthService.login({api_token: $cookies.get('ksLoginToken')});
+    // Check to see if there's a token in storage somewhere.
+    if (!AuthService.getCurrentUser()) {
+        if ($localStorage.ksLoginToken !== undefined && $localStorage.ksLoginToken !== 'undefined') {
+            AuthService.login({api_token: $localStorage.ksLoginToken});
+        } else if ($sessionStorage.ksLoginToken !== undefined && $sessionStorage.ksLoginToken !== 'undefined') {
+            AuthService.login({api_token: $sessionStorage.ksLoginToken});
+        }
     }
 
     // Update the scope whenever user information changes.
@@ -18,4 +22,4 @@ function MainController($rootScope, $cookies, AuthService) {
     });
 }
 
-export default ['$rootScope', '$cookies', 'AuthService', MainController];
+export default ['$rootScope', '$localStorage', '$sessionStorage', 'AuthService', MainController];
