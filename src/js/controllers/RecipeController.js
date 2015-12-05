@@ -1,3 +1,5 @@
+import debounce from 'lodash.debounce';
+
 function RecipeController($scope, RecipeService) {
     const recipesPerPage = 28;
 
@@ -24,17 +26,9 @@ function RecipeController($scope, RecipeService) {
         return page;
     }
 
-    let searchNum = 0;
-
-    $scope.$watch('search.term', (term) => {
-        const id = ++searchNum;
-
-        setTimeout(() => {
-            if (id === searchNum) {
-                this.getRecipes(0, term);
-            }
-        }, 250);
-    });
+    $scope.$watch('search.term', debounce((term) => {
+        this.getRecipes(0, term);
+    }, 350));
 
     this.getRecipes = (page = 0, searchTerm = '%20') => {
         let term = searchTerm;
