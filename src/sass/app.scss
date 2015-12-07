@@ -114,6 +114,7 @@ recipepreview {
 
 }
 
+<<<<<<< HEAD
 .searchbar {
   margin: 10px 40px 20px;
   padding: 20px;
@@ -121,4 +122,46 @@ recipepreview {
   md-input-container {
     padding-bottom: 0;
   }
+=======
+.hero-image {
+  margin-top: -16px;
+  margin-left: -10%;
+  margin-right: -10%;
+
+  width: 115.5%;
+  height: 96vh;
+  background-image: url("../img/laptop.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  p {
+    position: absolute;
+    font-size: 4em;
+    left: 20%;
+    right: 20%;
+    top: 30%;
+    text-align: center;
+
+    background-color: black;
+    color: white;
+
+    border-radius: 25px;
+
+    opacity: 0.9;
+  }
+
+  .dl-buttons {
+    text-align: center;
+    width: 40%;
+    left: 30%;
+    right: 30%;
+    position: absolute;
+    bottom: 5%;
+  }
+}
+
+.multiplatform {
+  text-align: center;
+>>>>>>> parent of 811351b... Revert "Home page."
 }
