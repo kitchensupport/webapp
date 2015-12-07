@@ -1,4 +1,4 @@
-function AuthService($http, $cookies, $mdDialog) {
+function AuthService($http, $localStorage, $sessionStorage, $mdDialog) {
     let currentUser;
     let modalIsOpen = false;
     let modal;
@@ -20,8 +20,11 @@ function AuthService($http, $cookies, $mdDialog) {
 
                     // Store user info in cookies.
                     if (args.remember) {
-                        $cookies.ksLoginToken = response.data.api_token;
+                        $localStorage.ksLoginToken = response.data.api_token;
+                    } else {
+                        $sessionStorage.ksLoginToken = response.data.api_token;
                     }
+
                 });
             } else if (args.api_token && args.api_token.length > 0) {
                 return $http.get(`http://api.kitchen.support/account?api_token=${args.api_token}`)
@@ -30,14 +33,17 @@ function AuthService($http, $cookies, $mdDialog) {
 
                         // Store user info in cookies.
                         if (args.remember) {
-                            $cookies.ksLoginToken = response.data.api_token;
+                            $localStorage.ksLoginToken = response.data.api_token;
+                        } else {
+                            $sessionStorage.ksLoginToken = response.data.api_token;
                         }
                     });
             }
         },
         logout: () => {
             currentUser = undefined;
-            $cookies.ksLoginToken = undefined;
+            delete $localStorage.ksLoginToken;
+            delete $sessionStorage.ksLoginToken;
         },
         forgotPassword: (email) => {
             return $http.post('http://api.kitchen.support/accounts/reset/request', {
@@ -89,4 +95,4 @@ function AuthService($http, $cookies, $mdDialog) {
     };
 }
 
-export default ['$http', '$cookies', '$mdDialog', AuthService];
+export default ['$http', '$localStorage', '$sessionStorage', '$mdDialog', AuthService];

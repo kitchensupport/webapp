@@ -4,7 +4,8 @@ export function search() {
         scope: {
             searchTerm: '@'
         },
-        controller: 'RecipeController'
+        controller: 'RecipeController',
+        controllerAs: 'recipe'
     };
 }
 

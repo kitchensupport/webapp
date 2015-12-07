@@ -1,20 +1,48 @@
-function RecipeController($scope, RecipeService) {
-    $scope.searchedRecipes = {};
+import debounce from 'lodash.debounce';
 
-    $scope.getSearchRecipes = (searchTerm) => {
-        if ($scope.searchedRecipes[searchTerm] && $scope.searchedRecipes[searchTerm].status === 200) {
-            return true;
+function RecipeController($scope, RecipeService) {
+    const recipesPerPage = 28;
+
+    $scope.searchedRecipes = {status: -1};
+
+    function parsePagination(data, limit, offset) {
+        const page = {
+            buttons: [],
+            pageCount: Math.ceil(data.matches / limit),
+            currPage: Math.ceil(offset / limit )
+        };
+
+        for (let i = 0;i < page.pageCount;i++) {
+            if (i === page.currPage) {
+                page.buttons[i] = 'disabled';
+            } else {
+                page.buttons[i] = 'enabled';
+            }
         }
 
-        $scope.searchedRecipes[searchTerm] = {status: -1, data: {}};
+        return page;
+    }
 
-        RecipeService.getSearch(searchTerm)
+    $scope.$watch('search.term', debounce((term) => {
+        this.getRecipes(0, term);
+    }, 350));
+
+    this.getRecipes = (page = 0, searchTerm = '%20') => {
+        let term = searchTerm;
+
+        if (!term || term.length === 0) {
+            term = '%20';
+        }
+
+        const offset = page * recipesPerPage;
+
+        RecipeService.getSearch({searchTerm: term, offset})
             .then((response) => {
-                console.log(response);
-                $scope.searchedRecipes[searchTerm] = response;
+                $scope.searchedRecipes = response;
+                $scope.searchedRecipes.pagination = parsePagination(response.data, recipesPerPage, offset);
                 return true;
             }, () => {
-                $scope.searchedRecipes[searchTerm].status = 500;
+                $scope.searchedRecipes.status = 500;
                 return false;
             });
     };
