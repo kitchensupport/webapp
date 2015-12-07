@@ -58,11 +58,22 @@ function RecipeService($http, $q, AuthService) {
         },
         getSearch: (params) => {
             const {searchTerm, limit = 28, offset = 0} = params;
+            const token = AuthService.getApiToken();
 
-            return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?limit=${limit}&offset=${offset}`));
+            if (token) {
+                return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?limit=${limit}&offset=${offset}&api_token=${token}`));
+            } else {
+                return parseRecipeArray($http.get(`http://api.kitchen.support/recipes/search/${searchTerm}?limit=${limit}&offset=${offset}`));
+            }
         },
         getRecipe: (recipeId) => {
-            return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}`));
+            const token = AuthService.getApiToken();
+
+            if (token) {
+                return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}&api_token=${token}`));
+            } else {
+                return parseRecipe($http.get(`http://api.kitchen.support/recipe?yummly_id=${recipeId}`));
+            }
         },
         favoriteRecipe: (recipeId) => {
             return $http.post(`http://api.kitchen.support/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});

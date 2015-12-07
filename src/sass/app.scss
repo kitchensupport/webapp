@@ -114,7 +114,6 @@ recipepreview {
 
 }
 
-<<<<<<< HEAD
 .searchbar {
   margin: 10px 40px 20px;
   padding: 20px;
@@ -122,14 +121,15 @@ recipepreview {
   md-input-container {
     padding-bottom: 0;
   }
-=======
+}
+
 .hero-image {
   margin-top: -16px;
   margin-left: -10%;
   margin-right: -10%;
 
   width: 115.5%;
-  height: 96vh;
+  height: 97vh;
   background-image: url("../img/laptop.jpg");
   background-repeat: no-repeat;
   background-position: center;
@@ -163,5 +163,9 @@ recipepreview {
 
 .multiplatform {
   text-align: center;
->>>>>>> parent of 811351b... Revert "Home page."
+
+  img {
+    width: 70%;
+    height: auto;
+  }
 }

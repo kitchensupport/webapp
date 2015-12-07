@@ -11,22 +11,14 @@
   </div>
 </div>
 
-<h1>Multi Platform</h1>
+<h1 style="text-align: center;">Multi Platform</h1>
 <div layout="row" class="multiplatform">
   <div flex=50>
     <h4>iOS</h4>
+    <img src="../img/phone2.jpg">
   </div>
   <div flex=50>
     <h3>Android</h3>
+    <img src="../img/phone.jpg">
   </div>
-</div>
-
-<div ng-if="!auth.user">
-  <h1>Welcome to Kitchen Support!</h1>
-  <h4>Enjoy your stay!</h4>
-</div>
-
-<div ng-if="auth.user">
-  <h1>Welcome to Kitchen Support, <span ng-bind="auth.user.email"></span>!</h1>
-  <h4>Enjoy your stay!</h4>
 </div>
