@@ -1,0 +1,46 @@
+<div ng-init="getRecipe()">
+    <span ng-bind="JSON.stringify(recipe)"></span>
+    <h1>Recipe Information</h1>
+    <div ng-show="recipe.status === 200">
+        <h2>
+            <i ng-show="!recipe.data.favorited && !recipe.data.favoritedLoading" ng-click="favoriteRecipe()" class="favorite fa fa-heart-o"></i>
+            <i ng-show="recipe.data.favorited && !recipe.data.favoritedLoading" ng-click="unFavoriteRecipe()" class="favorited fa fa-heart"></i>
+            <i ng-show="recipe.data.favoritedLoading" class="favorited fa fa-spinner"></i>
+            <span ng-bind="recipe.data.recipeName"></span>
+        </h2>
+
+        <img ng-src="{{recipe.data.imageUrl}}">
+        </br>
+
+    <span class="rating">
+      <span ng-repeat="star in recipe.data.ratingArray track by $index">
+        <i ng-if="star" class="fa fa-star"></i>
+        <i ng-if="!star" class="fa fa-star-o"></i>
+      </span>
+    </span>
+        </br>
+        <span ng-if="recipe.data.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.data.totalTimeString}}</span>
+
+        <md-button ng-click="markCompleted(recipe.data.id)"  ng-show="!recipe.data.completed && !recipe.data.completedLoading" ng-click="completeRecipe()">Complete Recipe</md-button >
+        <md-button ng-click="markUnCompleted(recipe.data.id)"  ng-show="recipe.data.completed && !recipe.data.completedLoading" ng-click="unCompleteRecipe()">UnComplete Recipe</md-button >
+        <md-button  ng-show="recipe.data.completedLoading" class="favorited fa fa-spinner">LOADING</md-button >
+
+        <h3>Ingredients</h2>
+            <div ng-if="recipe.data.ingredients.length">
+                <md-list>
+                    <md-list-item ng-repeat="ingredient in recipe.data.ingredients track by $index">
+                        {{ingredient}}
+                    </md-list-item>
+                </md-list>
+            </div>
+            <div ng-if="!recipe.data.ingredients.length">
+                <p>No ingredient information available.</p>
+            </div>
+    </div>
+    <div ng-show="recipe.status === -1" layout="row" layout-sm="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <div ng-show="recipe.status !== -1 && recipe.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+        <p class="message-error">Error loading recipe.</p>
+    </div>
+</div>

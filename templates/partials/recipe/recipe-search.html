@@ -1,0 +1,30 @@
+<div class="searchbar md-whiteframe-2dp" layout="row">
+    <md-input-container flex="100" class="md-icon-float">
+        <label>Search Term</label>
+        <md-icon md-font-icon="fa-search" class="fa"></md-icon>
+        <input ng-model="search.term" type="text">
+    </md-input-container>
+</div>
+
+<md-list ng-show="searchedRecipes.status === 200" layout="row" layout-margin layout-wrap data-ng-init="recipe.getRecipes()" layout="row">
+   <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="recipe in searchedRecipes.data.recipes" layout-align="center center">
+        <RecipePreview recipe-data="{{recipe}}"></RecipePreview>
+   </md-list-item>
+ </md-list>
+
+<div ng-show="searchedRecipes.status === 200 && searchedRecipes.data.recipes.length == 0" layout="row" layout-align="center center">
+    <p>There were no results :(</p>
+</div>
+
+<div ng-show="searchedRecipes.status === 200" class="paginatior" layout="row" layout-align="center center">
+    <md-button class="md-icon-button" ng-disabled="searchedRecipes.pagination.currPage == 0" ng-click="recipe.getRecipes(searchedRecipes.pagination.currPage - 1, search.term)"><</md-button>
+    <md-button ng-repeat="pageButton in searchedRecipes.pagination.buttons track by $index" class="md-icon-button" ng-disabled="pageButton === 'disabled'" ng-click="recipe.getRecipes($index, search.term)">{{$index + 1}}</md-button>
+    <md-button class="md-icon-button" ng-disabled="searchedRecipes.pagination.pageCount <= 1 || searchedRecipes.pagination.currPage == searchedRecipes.pagination.pageCount - 1" ng-click="recipe.getRecipes(searchedRecipes.pagination.currPage + 1, search.term)">></md-button>
+</div>
+
+ <div ng-show="searchedRecipes.status === -1" layout="row" layout-sm="column" layout-align="center center">
+     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+ </div>
+ <div ng-show="searchedRecipes.status !== -1 && searchedRecipes.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+     <p class="message-error">Error loading content.</p>
+ </div>

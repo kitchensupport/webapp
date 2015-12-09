@@ -1,0 +1,51 @@
+<div id="loginModal" layout="column">
+  <h1>Log into your account.</h1>
+  <div ng-show="!loginSubmitting">
+    <ng-messages class="message-error" for="loginForm.general">
+      <ng-message when="incorrect">
+        The password you entered is incorrect, or this account does not exist.
+      </ng-message>
+      <ng-message when="no-input">
+        Oops, looks like you forgot to fill out <em>all</em> of the fields...
+      </ng-message>
+      <ng-message when="issue">
+        Oops, we ran into an issue logging you in; please try again!
+      </ng-message>
+    </ng-messages>
+    <form ng-submit="login()" name="loginForm">
+      <md-content>
+        <md-input-container flex class="md-icon-float">
+          <label>Email Address</label>
+          <md-icon md-font-icon="fa-user" class="fa"></md-icon>
+          <input ng-disabled="loginSubmitting" ng-model="account.email" type="email">
+          <ng-messages class="message-error" for="loginForm.email">
+            <ng-message when="required">
+              An email address is required.
+            </ng-message>
+          </ng-messages>
+        </md-input-container>
+        <md-input-container flex class="md-icon-float">
+          <label>Password</label>
+          <md-icon md-font-icon="fa-lock" class="fa"></md-icon>
+          <input ng-disabled="loginSubmitting" ng-model="account.password" type="password">
+          <ng-messages class="message-error" for="loginForm.password">
+            <ng-message when="required">
+              A password is required.
+            </ng-message>
+          </ng-messages>
+        </md-input-container>
+        <md-checkbox ng-model="account.remember">
+          Remember my account
+        </md-checkbox>
+      </md-content>
+      <div class="modalButtons" layout="column"  layout-align="center center">
+        <md-button ng-disabled="loginSubmitting" class="md-raised md-primary" type="submit" id="modal-loginButton">Login</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="register" id="modal-register">Need an account?</md-button>
+        <md-button ng-click="closeLoginModal()" class="md-raised" ui-sref="forgot-password" id="modal-forgotPassword">Forgot your password?</md-button>
+      </div>
+    </form>
+  </div>
+  <div id="loginSpinner" ng-show="loginSubmitting" layout="row" layout-sm="column" layout-align="center center">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</div>

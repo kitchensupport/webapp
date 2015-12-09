@@ -1,0 +1,19 @@
+<div class="md-3-line md-whiteframe-z1" ui-sref="{{recipe.url}}">
+    <div class="recipeImage" ng-style="{'background-image':'url({{recipe.imageUrl}})'}">
+        <div ng-if="recipe.favorited">
+            <p class="recipeTitle"><i class="fa fa-heart"></i> <span  ng-bind="recipe.recipeName"></span></p>
+        </div>
+        <div ng-if="!recipe.favorited">
+            <p class="recipeTitle"><span ng-bind="recipe.recipeName"></span></p>
+        </div>
+    </div>
+    <div class="recipeDescription">
+          <span class="rating">
+            <span ng-repeat="star in recipe.ratingArray track by $index">
+              <i ng-if="star" class="fa fa-star"></i>
+              <i ng-if="!star" class="fa fa-star-o"></i>
+            </span>
+          </span>
+        <span ng-if="recipe.totalTimeString" class="recipeTime"><i class='fa fa-clock-o'></i>{{recipe.totalTimeString}}</span>
+    </div>
+</div>
