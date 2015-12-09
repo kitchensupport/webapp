@@ -1,21 +1,56 @@
+import debounce from 'lodash.debounce';
+
 function MyIngredientsController($rootScope, $scope, IngredientService) {
 
     // Require user authentication.
     $rootScope.auth = $rootScope.auth || {};
     $rootScope.auth.required = true;
 
-    $scope.getIngredients = (params = {}) => {
-        $scope.ingredients = {status: -1, data: {}};
+    const ingredientsPerPage = 15;
 
-        IngredientService.getIngredients(params)
+    $scope.searchedIngredients = {status: -1};
+    $scope.pantry = {status: -1, data: {}};
+
+    function parsePagination(data, limit, offset) {
+        const page = {
+            buttons: [],
+            pageCount: Math.ceil(data.matches / limit),
+            currPage: Math.ceil(offset / limit )
+        };
+
+        for (let i = 0;i < page.pageCount;i++) {
+            if (i === page.currPage) {
+                page.buttons[i] = 'disabled';
+            } else {
+                page.buttons[i] = 'enabled';
+            }
+        }
+
+        return page;
+    }
+
+    $scope.$watch('search.term', debounce((term) => {
+        $scope.getIngredients(0, term);
+    }, 350));
+
+    $scope.getIngredients = (page = 0, searchTerm = '%20') => {
+        let term = searchTerm;
+
+        if (!term || term.length === 0) {
+            term = '%20';
+        }
+
+        const offset = page * ingredientsPerPage;
+
+        IngredientService.getSearch({searchTerm: term, offset})
             .then((response) => {
-                $scope.ingredients = response;
-                console.log(response);
-            })
-            .catch((err) => {
-                console.log(`Error getting Ingredients: ${JSON.stringify(err)}`);
+                $scope.searchedIngredients = response;
+                $scope.searchedIngredients.pagination = parsePagination(response.data, ingredientsPerPage, offset);
+                return true;
+            }, () => {
+                $scope.searchedIngredients.status = 500;
+                return false;
             });
-        return IngredientService.getIngredients();
     };
 
     $scope.getPantry = () => {
@@ -73,12 +108,6 @@ function MyIngredientsController($rootScope, $scope, IngredientService) {
 
         $scope.getIngredients(params);
     };
-
-    // If the user is logged in.
-    if ($rootScope.auth.user) {
-        $scope.getIngredients();
-        $scope.getPantry();
-    }
 }
 
 export default ['$rootScope', '$scope', 'IngredientService', MyIngredientsController];

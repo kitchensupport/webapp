@@ -1,6 +1,6 @@
 <h1>Your Ingredients</h1>
 <div layout="column">
-    <div>
+    <div data-ng-init="getPantry()">
         <h2>In Your Pantry</h2>
         <md-list ng-if="pantry.status === 200 && pantry.data.matches > 0">
             <md-list-item ng-repeat="pantryItem in pantry.data.items">
@@ -18,22 +18,38 @@
     </div>
     <div>
         <h2>Available Ingredients</h2>
+
+        <div class="searchbar md-whiteframe-2dp" layout="row">
+            <md-input-container flex="100" class="md-icon-float">
+                <label>Search Term</label>
+                <md-icon md-font-icon="fa-search" class="fa"></md-icon>
+                <input ng-model="search.term" type="text">
+            </md-input-container>
+        </div>
+
         <p ng-if="ingredients.data.range">Displaying results {{ingredients.data.range}} out of {{ingredients.data.matches}}.</p>
-        <md-list ng-if="ingredients.status === 200">
-            <md-list-item ng-repeat="ingredient in ingredients.data.ingredients | limitTo: ingredients.data.params.limit || 30">
-                <md-button aria-label="Add Ingredient to Pantry" ng-click="addPantry(ingredient.id)"><md-icon md-font-icon="fa-plus" class="fa"></md-icon></md-button>
-                <span>{{ingredient.searchValue}}</span>
-            </md-list-item>
-            <div layout="row" layout-align="center center">
-                <md-button class="md-raised" ng-click="previousPageIngredients()"><</md-button>
-                <md-button class="md-raised" ng-click="nextPageIngredients()">></md-button>
-            </div>
-        </md-list>
-        <div ng-show="ingredients.status === -1" layout="row" layout-sm="column" layout-align="center center">
-            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <md-list ng-show="searchedIngredients.status === 200" layout="row" layout-margin layout-wrap data-ng-init="getIngredients()" layout="row">
+           <md-list-item flex-gt-md="25" flex-gt-sm="50" flex-sm="100" ng-repeat="ingredient in searchedIngredients.data.ingredients" layout-align="center center">
+               <md-button aria-label="Add Ingredient to Pantry" ng-click="addPantry(ingredient.id)"><md-icon md-font-icon="fa-plus" class="fa"></md-icon></md-button>
+               <span>{{ingredient.searchValue}}</span>
+           </md-list-item>
+         </md-list>
+
+        <div ng-show="searchedIngredients.status === 200 && searchedIngredients.data.ingredients.length == 0" layout="row" layout-align="center center">
+            <p>There were no results :(</p>
         </div>
-        <div ng-show="ingredients.status !== -1 && ingredients.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
-            <p class="message-error">Error loading ingredients.</p>
+
+        <div ng-show="searchedIngredients.status === 200" class="paginatior" layout="row" layout-align="start center">
+            <md-button class="md-icon-button" ng-disabled="searchedIngredients.pagination.currPage == 0" ng-click="getIngredients(searchedIngredients.pagination.currPage - 1, search.term)"><</md-button>
+            <md-button ng-repeat="pageButton in searchedIngredients.pagination.buttons track by $index" class="md-icon-button" ng-disabled="pageButton === 'disabled'" ng-click="getIngredients($index, search.term)">{{$index + 1}}</md-button>
+            <md-button class="md-icon-button" ng-disabled="searchedIngredients.pagination.pageCount <= 1 || searchedIngredients.pagination.currPage == searchedIngredients.pagination.pageCount - 1" ng-click="getIngredients(searchedIngredients.pagination.currPage + 1, search.term)">></md-button>
         </div>
+
+         <div ng-show="searchedIngredients.status === -1" layout="row" layout-sm="column" layout-align="center center">
+             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+         </div>
+         <div ng-show="searchedIngredients.status !== -1 && searchedIngredients.status !== 200 " layout="row" layout-sm="column" layout-align="center center">
+             <p class="message-error">Error loading content.</p>
+         </div>
     </div>
 </div>
