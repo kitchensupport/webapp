@@ -24,7 +24,7 @@ function RegistrationController($scope, $cookies, $state, AuthService) {
             .then((response) => {
 
                 // Log the user in.
-                AuthService.login({api_token: response.data.user.api_token})
+                AuthService.login({api_token: response.data.api_token})
                     .then(() => {
                         $state.go('home');
                     });

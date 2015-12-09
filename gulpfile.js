@@ -34,7 +34,7 @@ gulp.task('lint:tests', () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('build', ['build:js', 'build:sass', 'build:html']);
+gulp.task('build', ['build:js', 'build:sass', 'build:html', 'build:img']);
 
 gulp.task('test', ['build', 'build:tests'], () => {
     const child = new (forever.Monitor)('index.js');
@@ -56,6 +56,11 @@ gulp.task('test', ['build', 'build:tests'], () => {
 gulp.task('build:html', () => {
     return gulp.src('src/templates/**/*')
         .pipe(gulp.dest('dist/templates'));
+});
+
+gulp.task('build:img', () => {
+    return gulp.src('src/img/**/*')
+        .pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('build:js', ['lint:js'], () => {
@@ -102,5 +107,6 @@ gulp.task('watch', ['build'], () => {
     gulp.watch('src/js/**/*.js', ['build:js']);
     gulp.watch('src/sass/**/*.scss', ['build:sass']);
     gulp.watch('src/templates/**/*.html', ['build:html']);
+    gulp.watch('src/img/**/*', ['build:img']);
     gulp.watch('tests/**/*.js', ['build:tests']);
 });
