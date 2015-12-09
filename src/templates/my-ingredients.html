@@ -39,9 +39,9 @@
             <p>There were no results :(</p>
         </div>
 
-        <div ng-show="searchedIngredients.status === 200" class="paginatior" layout="row" layout-align="start center">
+        <div ng-show="searchedIngredients.status === 200" class="paginatior" layout="row" layout-align="center center">
             <md-button class="md-icon-button" ng-disabled="searchedIngredients.pagination.currPage == 0" ng-click="getIngredients(searchedIngredients.pagination.currPage - 1, search.term)"><</md-button>
-            <md-button ng-repeat="pageButton in searchedIngredients.pagination.buttons track by $index" class="md-icon-button" ng-disabled="pageButton === 'disabled'" ng-click="getIngredients($index, search.term)">{{$index + 1}}</md-button>
+            <md-button ng-repeat="pageButton in searchedIngredients.pagination.buttons | limitTo:10 track by $index" class="md-icon-button" ng-disabled="pageButton === 'disabled'" ng-click="getIngredients($index, search.term)">{{$index + 1}}</md-button>
             <md-button class="md-icon-button" ng-disabled="searchedIngredients.pagination.pageCount <= 1 || searchedIngredients.pagination.currPage == searchedIngredients.pagination.pageCount - 1" ng-click="getIngredients(searchedIngredients.pagination.currPage + 1, search.term)">></md-button>
         </div>
 
