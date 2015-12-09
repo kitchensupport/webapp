@@ -79,7 +79,7 @@ function RecipeService($http, $q, AuthService) {
             return $http.post(`http://api.kitchen.support/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         unFavoriteRecipe: (recipeId) => {
-            return $http.delete(`http://api.kitchen.support/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.post(`http://api.kitchen.support/favorites`, {api_token: AuthService.getApiToken(), recipe_id: recipeId, value: false});
         },
         likeRecipe: (recipeId) => {
             return $http.post(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
@@ -88,10 +88,10 @@ function RecipeService($http, $q, AuthService) {
             return $http.post(`http://api.kitchen.support/completed`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
         },
         unLikeRecipe: (recipeId) => {
-            return $http.delete(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.post(`http://api.kitchen.support/likes`, {api_token: AuthService.getApiToken(), recipe_id: recipeId, value: false});
         },
         unCompleteRecipe: (recipeId) => {
-            return $http.delete(`http://api.kitchen.support/completed`, {api_token: AuthService.getApiToken(), recipe_id: recipeId});
+            return $http.post(`http://api.kitchen.support/completed`, {api_token: AuthService.getApiToken(), recipe_id: recipeId, value: false});
         },
         getLiked: () => {
             return parseRecipeArray($http.get(`http://api.kitchen.support/likes?api_token=${AuthService.getApiToken()}`));

@@ -22,6 +22,16 @@ function parseIngredients(promise) {
 
 function RecipeService($http, $q, AuthService) {
     return {
+        getSearch: (params) => {
+            const {searchTerm, limit = 28, offset = 0} = params;
+            const token = AuthService.getApiToken();
+
+            if (token) {
+                return $http.get(`http://api.kitchen.support/ingredients/${searchTerm}?limit=${limit}&offset=${offset}&api_token=${token}`);
+            } else {
+                return $http.get(`http://api.kitchen.support/ingredients/${searchTerm}?limit=${limit}&offset=${offset}`);
+            }
+        },
         getIngredients: (params = {}) => {
             const {limit = 30, offset = 0} = params;
 
@@ -36,7 +46,7 @@ function RecipeService($http, $q, AuthService) {
             return $http.post(`http://api.kitchen.support/pantry`, {api_token: AuthService.getApiToken(), ingredient_id: ingredientId});
         },
         removePantry: (ingredientId) => {
-            return $http.delete(`http://api.kitchen.support/pantry`, {api_token: AuthService.getApiToken(), ingredient_id: ingredientId});
+            return $http.post(`http://api.kitchen.support/pantry`, {api_token: AuthService.getApiToken(), ingredient_id: ingredientId, value: false});
         }
     };
 }
