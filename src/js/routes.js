@@ -36,7 +36,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                   controller: 'RecoveryController'
               })
               .state('forgot-password-token', {
-                  url: '/forgot-password/:token/',
+                  url: '/forgot-password/:token',
                   templateUrl: 'templates/forgot-password-token.html',
                   controller: 'RecoveryNewPasswordController'
               })
